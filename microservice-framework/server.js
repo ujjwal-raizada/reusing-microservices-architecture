@@ -1,12 +1,15 @@
-let body_parser = require('body-parser')
-let express = require('express')
+let body_parser = require('body-parser');
+let express = require('express');
 
-let app = express()
+let transformations = require('./transformations')
+
+let app = express();
 app.use(body_parser.urlencoded({extended: true}));
 app.use(body_parser.json());
 
 let port = process.env.PORT || 8080;
 let router = express.Router();
+
 
 // logging function
 router.use(function(req, res, next) {
@@ -24,11 +27,7 @@ router.get('/', function(req, res) {
 router.post('/api', function(req, res) {
 
     // TODO: Add logic for parsing JSON for the microservice
-
-    message = {
-        text: 'POST request recieved!'
-    }
-    res.json(message);
+    res.json(transformations.transform(req.body));
 });
 
 app.use('/', router);
