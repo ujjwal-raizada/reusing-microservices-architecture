@@ -24,7 +24,42 @@ function start_server(server_name) {
     });
 }
 
+function build_server(server_name, transformation_code) {
+    console.log("Server name: " + server_name);
+    
+    ncp.limit = 16;
+    source = '../microservice-framework'
+    destination = './microservices/' + server_name + '/'
+    transformation_file = destination + 'transformations.js'
 
+    ncp(source, destination, function (err) {
+        if (err) {
+          return console.error(err);
+        }
+        console.log('created copy of microservice...');
+
+        fs.writeFile(transformation_file, transformation_code, function (err) {
+            if (err) throw err;
+            console.log('server created successfully...');
+        }); 
+    });
+
+
+}
+
+code = `
+// TODO: Add mapping and translations logic
+
+function transform(request_json) {
+    
+    // TODO: Auto-generated code goes here
+    return request_json;
+}
+
+module.exports = {transform}
+`
+
+// build_server('hello_world', code);
 start_server('hello_world');
 
-module.exports = { start_server};
+module.exports = { start_server, build_server };
