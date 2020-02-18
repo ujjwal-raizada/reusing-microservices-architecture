@@ -3,6 +3,7 @@ const ncp = require('ncp').ncp;
 const fs = require('fs');
 
 function start_server(server_name) {
+    console.log('reached!!')
     let server_loc = "./microservices/" + server_name + "/server.js";
 
     const ls = spawn("node", [server_loc]);
@@ -22,6 +23,7 @@ function start_server(server_name) {
     ls.on("close", code => {
         console.log(`child process exited with code ${code}`);
     });
+    console.log('reached!!', ls)
 }
 
 function build_server(server_name, transformation_code) {
@@ -46,20 +48,5 @@ function build_server(server_name, transformation_code) {
 
 
 }
-
-code = `
-// TODO: Add mapping and translations logic
-
-function transform(request_json) {
-    
-    // TODO: Auto-generated code goes here
-    return request_json;
-}
-
-module.exports = {transform}
-`
-
-// build_server('hello_world', code);
-start_server('hello_world');
 
 module.exports = { start_server, build_server };

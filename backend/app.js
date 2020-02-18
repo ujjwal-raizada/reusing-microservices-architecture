@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const cors = require('cors');
 const app = express();
 const UserModel = require('./model/User');
 
@@ -12,12 +13,19 @@ mongoose.Promise = global.Promise;
 
 require('./auth/auth');
 
+app.use(cors())
+app.use(express.json());
 app.use( bodyParser.urlencoded({ extended : false }) );
 
 const routes = require('./routes/routes');
 const secureRoute = require('./routes/secure-route');
+const microserviceRouter = require('./routes/microservice')
+const mappingRouter = require('./routes/mapping')
 
+
+app.use('/mapping', mappingRouter)
 app.use('/', routes);
+app.use('/microservice', microserviceRouter)
 app.use('/user', passport.authenticate('jwt', { session : false }), secureRoute );
 
 //Handle errors
@@ -26,6 +34,6 @@ app.use(function(err, req, res, next) {
   res.json({ error : err });
 });
 
-app.listen(3000, () => {
+app.listen(8080, () => {
   console.log('Server started')
 });
