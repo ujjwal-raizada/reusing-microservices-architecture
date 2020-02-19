@@ -1,6 +1,6 @@
 getInfo = async (req, res, next) => {
     if(req.body.microservice === 'B') {
-      var microserviceB = {
+      var requestedMicroservice = {
         'parameters' : ['B1', 'B2', 'B3', 'B4', 'none'],
         'parameterAttributes' : {
           'B1': {'name': 'B1', 'type': 'int'},
@@ -9,7 +9,7 @@ getInfo = async (req, res, next) => {
           'B4': {'name': 'B4', 'type': 'int'},
         }
       }
-      res.json({microserviceB})
+      res.json({requestedMicroservice})
     } else {
       res.json("Microservice not found!!!")
     }
