@@ -14,7 +14,7 @@
 
 
 import React , {Component} from 'react'
-import Navbar from './navbar.js'
+// import Navbar from './navbar.js'
 import {Link} from 'react-router-dom';
 // import './view_ms.css'
 import axios from 'axios'

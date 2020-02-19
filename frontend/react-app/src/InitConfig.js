@@ -6,8 +6,11 @@ function InitConfig(production) {
       ? ``
       : `http://localhost:8080`,
     routes: {
-      // sample routes
-      // user_login: `/user/login`,
+      allMappings: `/mapping/all`,
+      templates: `/mapping/templates`,
+      microservice: `/microservice`,
+      mapping: `/mapping/get`,
+      updateMapping: `/mapping/update`,
     }
   });
 }
