@@ -1,52 +1,55 @@
 const { spawn } = require("child_process");
 const ncp = require('ncp').ncp;
 const fs = require('fs');
+const { promisify } = require("util");
 
 function start_server(server_name) {
-    console.log('reached!!')
     let server_loc = "./microservices/" + server_name + "/server.js";
 
-    const ls = spawn("node", [server_loc]);
+    const cp = spawn("node", [server_loc]);
 
-    ls.stdout.on("data", data => {
+    cp.stdout.on("data", data => {
         console.log(`stdout: ${data}`);
     });
 
-    ls.stderr.on("data", data => {
+    cp.stderr.on("data", data => {
         console.log(`stderr: ${data}`);
     });
 
-    ls.on('error', (error) => {
+    cp.on('error', (error) => {
         console.log(`error: ${error.message}`);
     });
 
-    ls.on("close", code => {
+    cp.on("close", code => {
         console.log(`child process exited with code ${code}`);
     });
-    console.log('reached!!', ls)
 }
 
-function build_server(server_name, transformation_code) {
+async function build_server(server_name, transformation_code) {
     console.log("Server name: " + server_name);
     
-    ncp.limit = 16;
     source = '../microservice-framework'
     destination = './microservices/' + server_name + '/'
     transformation_file = destination + 'transformations.js'
 
-    ncp(source, destination, function (err) {
-        if (err) {
-          return console.error(err);
-        }
-        console.log('created copy of microservice...');
+    const createCopy = promisify(ncp) 
+    const writeFile = promisify(fs.writeFile);
 
-        fs.writeFile(transformation_file, transformation_code, function (err) {
-            if (err) throw err;
-            console.log('server created successfully...');
-        }); 
-    });
+    console.log('creating copy of microservice...');
+    await createCopy(source, destination, limit = 16)
+    .catch(err => {
+        console.error(err)
+        return 1
+    })
 
+    console.log('creating server...');
+    await writeFile(transformation_file, transformation_code)
+    .catch(err => {
+        console.error(err)
+        return 2
+    })
 
+    return 0
 }
 
 module.exports = { start_server, build_server };
