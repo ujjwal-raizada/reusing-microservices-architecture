@@ -1,43 +1,55 @@
-function transformationGenerator(microserviceMapping) {
-    var transform = ``
-    microserviceMapping.parameters.forEach(parameter => {
-        transform += `function ${microserviceMapping.mappings[parameter].function.name}${microserviceMapping.mappings[parameter].function.code}
-        
-`        
+function addMappings(parameters, mappings, transform) {
+    parameters.forEach(parameter => {
+        var { name, code } = mappings[parameter].function
+        transform += `function ${name} ${code} \n\n`
     });
 
-    transform += `function transform(request_json) {
-`
-    microserviceMapping.parameters.forEach(parameter => {
-        transform += `    var ${parameter} = ${microserviceMapping.mappings[parameter].function.name}(`
-        microserviceMapping.mappings[parameter].function.arguments.forEach((arg, index, arr) => {
+    return transform
+}
+
+function addMain(parameters, mappings, transform) {
+    transform += `function transform(request_json) { \n`
+    
+    // calculate values
+    parameters.forEach(parameter => {
+        var { name, arguments } = mappings[parameter].function
+
+        transform += `\tvar ${parameter} = ${name}(`
+        arguments.forEach((arg, index, arr) => {
             transform += `request_json.${arg}`
             if(index !== arr.length-1) {
                 transform += `, `
             }
         })
-        transform += `)
-`
+        transform += `)\n`
     })
 
-    transform += `
-    var response_json = {
-`
+    // create response
+    transform += `\n\tvar response_json = { \n`
+    parameters.forEach(parameter => {
+        transform += `\t\t${parameter}: ${parameter},\n`
+    })    
+    transform += `\t}`
 
-    microserviceMapping.parameters.forEach(parameter => {
-        transform += `        ${parameter}: ${parameter},
-`
-    })
-    
-    transform += `    }
-
-    return response_json;
-}
-    
-module.exports = {transform}
-`  
+    transform += `\n\n\treturn response_json;\n}`
 
     return transform
+}
+
+function addExport(transform) {
+    transform += `\n\nmodule.exports = {transform}\n`
+    return transform
+}
+
+function transformationGenerator(microserviceMapping) {
+    var {parameters, mappings} = microserviceMapping
+    var transform = ``
+
+    transform = addMappings(parameters, mappings, transform)
+    transform = addMain(parameters, mappings, transform)
+    transform = addExport(transform)
+
+    return transform    
 }
 
 module.exports = transformationGenerator
