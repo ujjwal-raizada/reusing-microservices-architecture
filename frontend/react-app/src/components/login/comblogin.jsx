@@ -1,6 +1,7 @@
 import React from "react"
 import "./comblogin.scss"
 import { Login, Register } from "./index" 
+import { Redirect } from "react-router-dom";
 
 class Combologin extends React.Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class Combologin extends React.Component {
         const current = isLogginActive ? "Register" : "Login";
         const currentActive = isLogginActive ? "login" : "register";
         return (
-          <div className="App">
+          <div className="combologin">
             <div className="login">
               <div className="container" ref={ref => (this.container = ref)}>
                 {isLogginActive && (

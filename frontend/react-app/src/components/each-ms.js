@@ -14,9 +14,8 @@
 
 
 import React , {Component} from 'react'
-import Navbar from './navbar.js'
 import {Link} from 'react-router-dom';
-// import './view_ms.css'
+import './view_ms.css'
 import axios from 'axios'
 
 /* 
@@ -37,7 +36,7 @@ class Each_MS extends Component{
     by the organization
     The micro-frontend stores the data returned by the micro-service in it's state so that it can be rendered 
     */
-    axios.post("/api/retr_one",{micro_id:this.props.micro_id}).then(res => {
+    axios.post("http://localhost:8080/api/retr_one",{micro_id:this.props.micro_id}).then(res => {
       console.log("Data reached")
       this.setState({micro:res.data.micro,loadStatus:true})
     })
@@ -81,7 +80,7 @@ class Each_MS extends Component{
             </div>
             <p className="micro-doc"><b>Documentation: </b>{micro.documentation}</p>
             </div>
-            <div className="micro-but">
+            <div>
                 <Link to={{pathname:"/microservices",state:{micro_id:micro._id}}}>
                   <button className="btn btn-success">Link params</button>
                 </Link>

@@ -51,20 +51,21 @@
   box-sizing: border-box;
 }
 .each-micro {
+  z-index: 2000;
   box-sizing: border-box;
   float: left;
   display: block;
   width: 28vw;
   height: auto;
-  margin: 1.5vw 1.5vh;
-  padding: 1vw 1vh;
+  margin: 2vw 2vh;
+  padding: 1.5vw 1.5vh;
   box-shadow: 0 7px 10px 0 rgba(255, 255, 255, 0.5);
   background-color: #dedefa;
 }
 
 .each-ms-comp{
   border-top: 11px solid rgba(28,110,164,0.8);
-  border-radius: 23px 15px 18px 20px;
+  /* border-radius: 23px 15px 18px 20px; */
 
 }
 .each-mf-comp{

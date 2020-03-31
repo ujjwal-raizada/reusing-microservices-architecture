@@ -1,19 +1,19 @@
 //Custom Fonts
 @import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
 
-.App {
+.combologin {
   width: 100%;
-  height: auto;
+  height: inherit;
   text-align: center;
+  min-height:100vh;
   display: flex;
   justify-content: center;
-  background-image: url("../images/darkb.jpg");
   align-items: center;
   font-family: "Open Sans", sans-serif;
-  background-color: #000000;
   background-position:left; /* Center the image */
-  background-repeat: no-repeat; /* Do not repeat the image */
+  background-repeat: repeat; /* Do not repeat the image */
   background-size: cover;
+  background-image: url("../images/darkb.jpg");
 }
 
 

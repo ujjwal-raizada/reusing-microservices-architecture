@@ -9,7 +9,7 @@ class Microservices extends Component{
     loadStatus:false 
   }
   componentWillMount(){
-    axios.get('/api/micr').then(res=>{
+    axios.get('http://localhost:8080/api/micr').then(res=>{
       this.setState({micros:res.data.micros,loadStatus:true});
       console.log(res.data.micros);
     })
