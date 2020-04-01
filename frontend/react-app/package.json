@@ -9,6 +9,7 @@
     "@trendmicro/react-sidenav": "^0.5.0",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "font-awesome": "^4.7.0",
     "monaco-editor": "^0.19.3",
     "node-sass": "^4.13.1",
     "react": "^16.12.0",
