@@ -1,6 +1,7 @@
 import React from "react"
 import "./comblogin.scss"
 import { Login, Register } from "./index" 
+import { Redirect } from "react-router-dom";
 
 class Combologin extends React.Component {
     constructor(props) {
@@ -14,10 +15,10 @@ class Combologin extends React.Component {
         //Add .right by default
         this.rightSide.classList.add("right");
       }
-    
+
       changeState() {
         const { isLogginActive } = this.state;
-    
+
         if (isLogginActive) {
           this.rightSide.classList.remove("right");
           this.rightSide.classList.add("left");
@@ -27,13 +28,13 @@ class Combologin extends React.Component {
         }
         this.setState(prevState => ({ isLogginActive: !prevState.isLogginActive }));
       }
-    
+
       render() {
         const { isLogginActive } = this.state;
         const current = isLogginActive ? "Register" : "Login";
         const currentActive = isLogginActive ? "login" : "register";
         return (
-          <div className="App">
+          <div className="combologin">
             <div className="login">
               <div className="container" ref={ref => (this.container = ref)}>
                 {isLogginActive && (
@@ -54,7 +55,7 @@ class Combologin extends React.Component {
         );
       }
     }
-    
+
     const RightSide = props => {
       return (
         <div
@@ -69,10 +70,4 @@ class Combologin extends React.Component {
       );
 };
 
-
-    
-    export default Combologin;
-
-
-
-
+export default Combologin;
