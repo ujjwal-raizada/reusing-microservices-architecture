@@ -33,7 +33,7 @@ class Each_MS extends Component{
     by the organization
     The micro-frontend stores the data returned by the micro-service in it's state so that it can be rendered 
     */
-    axios.post("http://localhost:8080/api/retr_one",{micro_id:this.props.micro_id}).then(res => {
+    axios.post("http://localhost:8080/existing/one",{micro_id:this.props.micro_id}).then(res => {
       console.log("Data reached")
       this.setState({micro:res.data.micro,loadStatus:true})
     })
