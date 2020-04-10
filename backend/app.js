@@ -20,16 +20,16 @@ app.use(cors())
 app.use(express.json());
 app.use( bodyParser.urlencoded({ extended : false }) );
 
-const newRoutes = require("./routes/api");
 const routes = require('./routes/routes');
 const secureRoute = require('./routes/secure-route');
-const microserviceRouter = require('./routes/microservice')
+const requestedRouter = require('./routes/requestedMS')
+const existingRouter = require('./routes/existingMS')
 const mappingRouter = require('./routes/mapping')
 
-app.use("/api", newRoutes);
 app.use('/mapping', mappingRouter)
 app.use('/', routes);
-app.use('/microservice', microserviceRouter)
+app.use('/existing', existingRouter)
+app.use('/requested', requestedRouter)
 app.use('/user', passport.authenticate('jwt', { session : false }), secureRoute );
 
 //Handle errors

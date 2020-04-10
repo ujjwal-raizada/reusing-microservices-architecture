@@ -12,7 +12,7 @@ class Each_MSB extends Component{
 
   componentWillMount(){
 
-    axios.post("http://localhost:8080/api/retr_oneB",{micro_id:this.props.micro_id}).then(res => {
+    axios.post("http://localhost:8080/requested/one",{micro_id:this.props.micro_id}).then(res => {
       console.log("Data reached")
       this.setState({micro:res.data.micro,loadStatus:true})
     })

@@ -11,9 +11,9 @@ class Sidebar extends Component {
      }
 
     componentWillMount(){
-        axios.get('http://localhost:8080/api/micr').then(res=>{
+        axios.get('http://localhost:8080/requested/all').then(res=>{
           this.setState({micros:res.data.micros,loadStatus:true});
-        //   console.log(res.data.micros);
+          console.log(res.data.micros);
         })
     }
 
