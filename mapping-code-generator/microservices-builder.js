@@ -25,12 +25,13 @@ function start_server(server_name) {
     });
 }
 
-async function build_server(server_name, transformation_code) {
+async function build_server(server_name, transformation_code, configuration) {
     console.log("Server name: " + server_name);
     
     source = '../microservice-framework'
     destination = './microservices/' + server_name + '/'
     transformation_file = destination + 'transformations.js'
+    configuration_file = destination + 'config.js'
 
     const createCopy = promisify(ncp) 
     const writeFile = promisify(fs.writeFile);
@@ -47,6 +48,12 @@ async function build_server(server_name, transformation_code) {
     .catch(err => {
         console.error(err)
         return 2
+    })
+
+    await writeFile(configuration_file, configuration)
+    .catch(err => {
+        console.error(err)
+        return 3
     })
 
     return 0

@@ -25,7 +25,22 @@ var MicroserviceSchema = new Schema({
     }],
     params : [{ 
         type : String 
-    }]
+    }],
+    url : {
+        type : String,
+        required : true,
+        unique : true
+    },
+    getRoute : {
+        type : String,
+        required : true,
+        unique : true
+    },
+    postRoute : {
+        type : String,
+        required : true,
+        unique : true
+    },
   });
 
 var MicroserviceModel = mongoose.model("Microservice", MicroserviceSchema);
