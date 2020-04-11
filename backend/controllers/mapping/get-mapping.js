@@ -1,14 +1,15 @@
 getMapping = async (req, res) => {
     if(req.body.existing === 'A' && req.body.requested === 'B') {
       var  microserviceMapping = {
-        'parameters': ['A', 'B', 'C', 'D', 'E'],
+        'parameters': ['A', 'B'],
         'mappings': {
           'A': {'param': 'A', 'type': null, 'subType': null, 'function': {'name': null,'arguments': [], 'code': ''}},
           'B': {'param': 'B', 'type': null, 'subType': null, 'function': {'name': null,'arguments': [], 'code': ''}},
-          'C': {'param': 'C', 'type': null, 'subType': null, 'function': {'name': null,'arguments': [], 'code': ''}},
-          'D': {'param': 'D', 'type': null, 'subType': null, 'function': {'name': null,'arguments': [], 'code': ''}},
-          'E': {'param': 'E', 'type': null, 'subType': null, 'function': {'name': null,'arguments': [], 'code': ''}}
-        }
+        },
+        url:'https://reqres.in',
+        getRoute:'/api/users?page=2',
+        postRoute:'/api/users',
+        port: 5051
       }
       res.json({microserviceMapping})
     } else {

@@ -1,15 +1,22 @@
+let axios = require("axios");
+let config = require("react-global-configuration");
 let body_parser = require('body-parser');
 let express = require('express');
 
-let transformations = require('./transformations')
+let transformations = require('./transformations');
+let configuration =  require("./config");
 
+config.default.set(configuration);
 let app = express();
 app.use(body_parser.urlencoded({extended: true}));
 app.use(body_parser.json());
 
-let port = process.env.PORT || 5000;
+let port = process.env.PORT || config.default.get('port');
 let router = express.Router();
 
+let getRoute = config.default.get('routes.get');
+let postRoute = config.default.get('routes.post');
+let hostURL = config.default.get('host');
 
 // logging function
 router.use(function(req, res, next) {
@@ -17,17 +24,27 @@ router.use(function(req, res, next) {
     next();
 });
 
-router.get('/', function(req, res) {
-    message = {
-        text: 'TEST: API is working fine! <br> pass data to /api endpoint'
-    }
-    res.json(message);
+router.get(getRoute, function(req, res) {
+    axios.get(hostURL + getRoute)
+    .then(response => {
+        res.json(response.data);
+    })
+    .catch(err => {
+        console.log(err)
+        res.send("Error")
+    })    
 });
 
-router.post('/api', function(req, res) {
-
-    // TODO: Add logic for parsing JSON for the microservice
-    res.json(transformations.transform(req.body));
+router.post(postRoute, function(req, res) {
+    var data = transformations.transform(req.body)
+    axios.post(hostURL + postRoute, data)
+    .then(response => {
+        res.json(response.data);
+    })
+    .catch(err => {
+        console.log(err)
+        res.send("Error")
+    })
 });
 
 app.use('/', router);
