@@ -7,9 +7,10 @@ getMapping = async (req, res) => {
           'B': {'param': 'B', 'type': null, 'subType': null, 'function': {'name': null,'arguments': [], 'code': ''}},
         },
         url:'https://reqres.in',
-        getRoute:'/api/users?page=2',
+        getRoute:'/api/unknown',
         postRoute:'/api/users',
-        port: 5051
+        port: 5051,
+        batchSize: 2
       }
       res.json({microserviceMapping})
     } else {
