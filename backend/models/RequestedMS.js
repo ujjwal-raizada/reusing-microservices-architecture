@@ -11,7 +11,7 @@ var RequestedMSSchema = new Schema({
         type : String
     }],
     port : {
-        type : Integer,
+        type : Number,
         required : true,
         unique : true
     }          
