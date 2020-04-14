@@ -11,7 +11,7 @@ class Rightbar extends Component {
      }
 
     componentWillMount(){
-        axios.get('http://localhost:8080/api/micrB').then(res=>{
+        axios.get('http://localhost:8080/requested/all').then(res=>{
           this.setState({micros:res.data.micros,loadStatus:true});
         //   console.log(res.data.micros);
         })

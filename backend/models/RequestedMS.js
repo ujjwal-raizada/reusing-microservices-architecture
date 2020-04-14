@@ -9,7 +9,12 @@ var RequestedMSSchema = new Schema({
     },
     params : [{
         type : String
-    }]          
+    }],
+    port : {
+        type : Number,
+        required : true,
+        unique : true
+    }          
   });
 
 var RequestedMSModel = mongoose.model("RequestedMS", RequestedMSSchema);

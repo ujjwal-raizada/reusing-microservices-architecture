@@ -8,9 +8,15 @@ function InitConfig(production) {
     routes: {
       allMappings: `/mapping/all`,
       templates: `/mapping/templates`,
-      microservice: `/microservice`,
       mapping: `/mapping/get`,
       updateMapping: `/mapping/update`,
+      microservice: `/existing/info`,
+      existingById: `/existing/one`,
+      allExisting: `/existing/all`,
+      addExisting: `/existing/add`,
+      requestedById: `/requested/one`,
+      allRequested: `/requested/all`,
+      addRequested: `/requested/add`,
     }
   });
 }

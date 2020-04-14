@@ -1,13 +1,16 @@
 const transformationGenerator = require('./transformation-generator')
+const configGenerator = require('./config-generator')
 const microservices_builder = require('../../../mapping-code-generator/microservices-builder')
 
 updateMapping = async (req, res) => {
     const {microserviceMapping, requestedMicroserviceName} = req.body
     var transform = transformationGenerator(microserviceMapping)
+    var config = configGenerator(microserviceMapping)
 
     const status = await microservices_builder.build_server(
         requestedMicroserviceName,
-        transform
+        transform,
+        config
     )    
     if(status === 0) {
         console.log('Success')
