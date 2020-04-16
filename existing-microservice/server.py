@@ -14,13 +14,36 @@ posts = []
 
 @app.route('/')
 def index():
-    return "Welcome to home page of test API. Sent POST requests to /api"
+    text = """
+    Welcome to home page of test API. Sent POST requests to /api
+    
+    endpoint accepts -
+    GET - displays the posts. goto <a href="/api">GET /api</a> to check.
+    POST - Send POST requests to create posts in JSON format.
+
+        four parameters required in POST request.
+        1. username
+        2. password
+        3. subject
+        4. text
+
+        example users
+        1. UjjwalRaizada Ujjwal123
+        2. PrakharGoenka Prakhar123
+
+    """
+    return text.replace('\n', '<br>')
 
 
 @app.route('/api', methods=['GET', 'POST'])
 def api():
+    global posts
+    with open("user_data", "rb+") as file:
+        posts = pickle.load(file)
 
     if request.method == 'POST':
+
+        
 
         req_data = request.get_json()
         print(req_data)
@@ -53,7 +76,4 @@ def api():
 
 
 if __name__ == '__main__':
-    with open("user_data", "rb+") as file:
-        posts = pickle.load(file)
-
     app.run(debug=True, port=5000)
