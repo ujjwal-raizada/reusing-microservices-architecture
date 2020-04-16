@@ -21,18 +21,18 @@ def index():
     GET - displays the posts. goto <a href="/api">GET /api</a> to check.
     POST - Send POST requests to create posts in JSON format.
 
-        four parameters required in POST request.
-        1. username
-        2. password
-        3. subject
-        4. text
+        * four parameters required in POST request.
+            1. username
+            2. password
+            3. subject
+            4. text
 
-        example users
-        1. UjjwalRaizada Ujjwal123
-        2. PrakharGoenka Prakhar123
+        * example users
+            1. UjjwalRaizada Ujjwal123
+            2. PrakharGoenka Prakhar123
 
     """
-    return text.replace('\n', '<br>')
+    return text.replace('\n', '<br>').replace("    ", "&emsp;")
 
 
 @app.route('/api', methods=['GET', 'POST'])
