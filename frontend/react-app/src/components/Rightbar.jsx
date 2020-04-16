@@ -20,7 +20,7 @@ class Rightbar extends Component {
     render() { 
         var micros = this.state.micros ;
         // console.log(this.props.renderMicroserviceB);
-        if(this.state.loadStatus==true){
+        if(this.state.loadStatus === true){
             micros = micros.map(function(micro,index){
               return(
                   <NavItem key= {micro._id}  eventkey = {micro._id} onClick = {() => this.props.renderMicroserviceB(micro._id)}>

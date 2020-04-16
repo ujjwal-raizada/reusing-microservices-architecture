@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios'
 import './home.css'
 import Header from './Header';
 import Sidebar from './Sidebar' ;
@@ -35,7 +34,7 @@ class Home extends Component {
       return <Each_MSB key= {this.state.requestedMicroB} micro_id={this.state.requestedMicroB} link={false}/>;
     }
     render() { 
-      if(this.state.hasMicroCall == false && this.state.hasMicroCallB == false){
+      if(this.state.hasMicroCall === false && this.state.hasMicroCallB === false){
         return ( 
           <div className="home-wrap">
               <Header/>

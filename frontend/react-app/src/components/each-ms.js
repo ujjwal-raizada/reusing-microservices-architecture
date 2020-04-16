@@ -22,7 +22,7 @@ class Each_MS extends Component{
     var keywords = micro.keywords ;
     var tech_stack = micro.tech_stack ;
     var params = micro.params;
-    if(this.state.loadStatus==true){
+    if(this.state.loadStatus === true){
 
     keywords = keywords.map(function(key,index){
       return(<div className="mkey" key={index}><p>{key}</p></div>)
