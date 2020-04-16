@@ -20,7 +20,7 @@ class Each_MSB extends Component{
   render(){
     var micro = this.state.micro ;
     var params = micro.params;
-    if(this.state.loadStatus == true){
+    if(this.state.loadStatus === true){
     params = params.map(function(key,index){
     return ( <div className="mtech"  key={index}><p>{key}</p></div>)
     })

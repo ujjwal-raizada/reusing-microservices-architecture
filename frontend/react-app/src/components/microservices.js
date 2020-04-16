@@ -16,7 +16,7 @@ class Microservices extends Component{
   }
   render(){
     var micros = this.state.micros ;
-    if(this.state.loadStatus==true){
+    if(this.state.loadStatus === true){
     micros = micros.map(function(micro,index){
       return(
           <Each_MS key= {micro._id} micro_id={micro._id} link={false}/>
