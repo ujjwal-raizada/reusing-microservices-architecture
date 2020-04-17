@@ -40,15 +40,29 @@ endpoint accepts -
 GET - displays the posts. goto <a href="/api">GET /api</a> to check.
 POST - Send POST requests to create posts in JSON format.
 
+    * example users
+        1. UjjwalRaizada Ujjwal123
+        2. PrakharGoenka Prakhar123
+
+    <b>/api</b>
     * four parameters required in POST request.
         1. username
         2. password
         3. subject
         4. text
 
-    * example users
-        1. UjjwalRaizada Ujjwal123
-        2. PrakharGoenka Prakhar123
+    <b>/api/bulk</b>
+    * accepts a list of requests, where each request is one accepted by /api
+    * structure:
+        [
+            request_1,
+            request_2,
+            ...
+            request_n
+        ]
+
+     <b>/api/reset</b>
+    *resets the posts database
 
     """
     return text.replace('\n', '<br>').replace("    ", "&emsp;")
@@ -102,6 +116,14 @@ def bulk_api():
             print("user check failed...")
             return json.dumps({"status": "failed"})
     return json.dumps({"status": "success"})
+
+
+@app.route('/api/reset', methods=['GET'], endpoint='reset')
+@persistant
+def reset_data():
+    global posts
+    posts = []
+    return "data reset successful."
 
 
 if __name__ == '__main__':

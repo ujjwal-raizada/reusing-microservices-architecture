@@ -16,6 +16,7 @@ def test_api():
     print(r)
     print(r.text)
 
+
 def test_bulk():
     req_data = []
     for i in range(random.randint(1, 11)):
