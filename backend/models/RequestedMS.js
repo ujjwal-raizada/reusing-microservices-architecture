@@ -6,15 +6,33 @@ var RequestedMSSchema = new Schema({
         type : String,
         required : true,
         unique : true
-    },
-    params : [{
+    },  
+    description : { 
         type : String
+    },
+    params : [{ 
+        type : String 
     }],
-    port : {
+    url : {
+        type : String,
+        required : true,
+        unique : true
+    },
+    getRoute : {
+        type : String,
+        required : true,
+        unique : true
+    },
+    postRoute : {
+        type : String,
+        required : true,
+        unique : true
+    },
+    batchSize: {
         type : Number,
         required : true,
         unique : true
-    }          
+    }, 
   });
 
 var RequestedMSModel = mongoose.model("RequestedMS", RequestedMSSchema);

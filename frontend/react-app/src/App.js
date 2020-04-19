@@ -5,6 +5,7 @@ import Combologin from './components/login/comblogin';
 import Microservices from './components/microservices' ;
 import MappingContainer from './components/MappingContainer'
 import RegisterService from './components/RegisterService';
+import RegisterRequest from './components/RegisterRequest';
 import NotFound from './components/NotFound'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route exact path = '/microservices' component = {Microservices} />
           <Route exact path = '/mapping' component = {MappingContainer} />
           <Route exact path = '/register/service' component = {RegisterService}  />
+          <Route exact path = '/register/request' component = {RegisterRequest}  />
           <Route component = {NotFound} />
 				</Switch>
     </Router>  

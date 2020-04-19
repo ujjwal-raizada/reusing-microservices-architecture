@@ -9,6 +9,6 @@ const add = require(path + '/add')
 
 router.post("/one", getOne);
 router.get("/all", getAll);
-router.get("/add", add);
+router.post("/add", add);
 
 module.exports = router
