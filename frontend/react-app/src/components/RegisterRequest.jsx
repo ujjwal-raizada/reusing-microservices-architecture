@@ -9,16 +9,12 @@ class RegisterService extends Component {
 
   state = {
     title: '',
-    keywords: '',
-    developer: '',
-    documentation: '',
-    tech_stack: '',
-    code_snippet: '',
+    description: '',
     params: '',
-    batchSize: '',
     url: '',
+    batchSize: '',
     getRoute: '',
-    postRoute: ''
+    postRoute: '',
   }
 
   handleChange = event => {
@@ -31,16 +27,14 @@ class RegisterService extends Component {
 
   handleSubmit = event => {
     event.preventDefault()
-    const route = config.get('host_url') + config.get('routes.addExisting')
+    const route = config.get('host_url') + config.get('routes.addRequested')
     var data = {...this.state}
     data.params = data.params.split(/\s*,\s*/)
-    data.tech_stack = data.tech_stack.split(/\s*,\s*/)
-    data.keywords = data.keywords.split(/\s*,\s*/)
     
     axios.post(route, {data: data}) 
     .then(res => {
       if(res.data == '0') {
-        alert('Microservice has been added')
+        alert('Request has been added')
       } else {
         alert('Error in addition!')
       }
@@ -55,9 +49,9 @@ class RegisterService extends Component {
     return (
       <Fragment>
         <Header />
-        <Container>  
-          <h3> Register a new Microservice </h3>   
-          <br />              
+        <Container> 
+          <h3> Request for a new Microservice </h3>  
+          <br />       
           <Form>
             <Form.Row>
               <Form.Group as={Col} controlId="title">
@@ -69,33 +63,15 @@ class RegisterService extends Component {
                   onChange={this.handleChange}
                   />
               </Form.Group>
-              <Form.Group as={Col} controlId="developer">
-                <Form.Label> Developer </Form.Label>
-                <Form.Control 
-                  type="text" 
-                  placeholder="Developed By..."
-                  value={this.state.developer}
-                  onChange={this.handleChange}
-                  />
-              </Form.Group>
             </Form.Row>
 
             <Form.Row>
-              <Form.Group as={Col} controlId="keywords">
-                <Form.Label> Keywords </Form.Label>
+              <Form.Group as={Col} controlId="description">
+                <Form.Label> Description </Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="comma(,) separated"
-                  value={this.state.keywords}
-                  onChange={this.handleChange}
-                  />
-              </Form.Group>
-              <Form.Group as={Col} controlId="tech_stack">
-                <Form.Label> Tech Stack </Form.Label>
-                <Form.Control 
-                  type="text" 
-                  placeholder="comma(,) separated"
-                  value={this.state.tech_stack}
+                  placeholder="Description"
+                  value={this.state.description}
                   onChange={this.handleChange}
                   />
               </Form.Group>
@@ -147,29 +123,6 @@ class RegisterService extends Component {
                   type="text" 
                   placeholder="Post Route"
                   value={this.state.postRoute}
-                  onChange={this.handleChange}
-                  />
-              </Form.Group>
-            </Form.Row>
-
-            <Form.Row>
-              <Form.Group as={Col} controlId="documentation">
-                <Form.Label> Documentation </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Documentation"
-                  value={this.state.documentation}
-                  onChange={this.handleChange}
-                  />
-              </Form.Group>
-            </Form.Row>
-            <Form.Row>
-              <Form.Group as={Col} controlId="code_snippet">
-                <Form.Label> Code Snippet </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Code Snippet"
-                  value={this.state.code_snippet}
                   onChange={this.handleChange}
                   />
               </Form.Group>

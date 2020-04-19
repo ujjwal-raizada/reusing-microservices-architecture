@@ -1,15 +1,16 @@
 var Requestmicro = require("../../models/RequestedMS.js");
 
 add = (req,res) => {
-    Requestmicro.create({
-      title:"Text Analyser",
-      params:["paramB1","paramB2"],
-      port: 5051
-    },
-    (err,obj) =>{
-      console.log(obj);
-    }) 
-    res.send("Microservice created")
+    Requestmicro.create(
+      req.body.data,
+      (err,obj) => {
+        if(err) {
+          console.log(err);
+          res.send('1')
+        } else {
+          res.send('0')
+        }
+      })
   }
 
 module.exports = add
