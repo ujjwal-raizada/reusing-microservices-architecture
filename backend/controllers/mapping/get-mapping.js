@@ -1,54 +1,47 @@
-var Microservice = require("../../models/Microservice.js");
+const Mapping = require("../../models/Mapping.js")
+const Microservice = require("../../models/Microservice.js")
 
 getMapping = async (req, res) => {
-    if(req.body.existing === 'A' && req.body.requested === 'B') {
-      var  microserviceMapping = {
-        'parameters': ['A', 'B'],
-        'mappings': {
-          'A': {'param': 'A', 'type': null, 'subType': null, 'function': {'name': null,'arguments': [], 'code': ''}},
-          'B': {'param': 'B', 'type': null, 'subType': null, 'function': {'name': null,'arguments': [], 'code': ''}},
-        },
-        url:'https://reqres.in',
-        getRoute:'/api/unknown',
-        postRoute:'/api/users',
-        port: 5051,
-        batchSize: 2
-      }
-      res.json({microserviceMapping})
+  const { existing, requested } = req.body
+  Mapping.findOne({requested: requested}, (err, mapping) => {
+    if(err) {
+      console.log(err)
+      res.send({status: false, error: err})
     } else {
-
-      let micro_id = req.body.existing;
-
-      Microservice.findById(micro_id, (err, one_micro) => {
-        if (err) {
-          console.log("Oops Error:" + err);
-          res.send({status:false,error:err})
-        } else {
-          
-          var parameters = one_micro.params ;         
-          mappings = {} ;
-          for(var i=0 ; i < parameters.length; i++){
-             mappings[parameters[i]] = {'param': parameters[i], 
-                                        'type': null,
-                                        'subType': null,
-                                        'function': {'name': null,'arguments': [], 'code': ''} 
-                                        } 
+      if(mapping) {
+        res.send({status:true, mapping: mapping})
+      } else {
+        var mapping = {}
+        Microservice.findOne({title: existing}, (err, microservice) => {
+          if(err) {
+            console.log(err)
+            res.send({status: false, error: err})
+          } else {
+            mapping.parameters = microservice.params
+            mapping.url = microservice.url
+            mapping.getRoute = microservice.getRoute
+            mapping.postRoute = microservice.postRoute
+            mapping.batchSize = microservice.batchSize
+            mapping.port = 5051
+            mapping.mappings = {}
+            mapping.parameters.forEach(param => {
+              mapping.mappings[param] = {
+                'param': param,
+                'type': null,
+                'subType': null,
+                'function': {
+                  'name': null,
+                  'arguments': [],
+                  'code': ''
+                }
+              }
+            })
+            res.send({status:true, mapping: mapping})        
           }
-          
-          var  microserviceMapping = {
-            'parameters': parameters,
-            'mappings': mappings,
-            url:'',
-            getRoute:'/api/unknown',
-            postRoute:'/api/users',
-            port: 5051,
-            batchSize: 2
-          }
-          
-          res.json({microserviceMapping})
-        }
-      });
+        })
       }
+    }
+  })
 }
 
 module.exports = getMapping
