@@ -17,9 +17,9 @@ getTemplates = async (req, res, next) => {
         },
 
         'batching': {
-            'type Y':'(a, b) { return 0 }',
+            'type F':'(a, b) { return 0 }',
+            'type A':'(a, b) { return 0 }',
             'type B':'(a, b) { return 0 }',
-            'type C':'(a, b) { return 0 }',
             'type D':'(a, b) { return 0 }',
             'custom':'(a, b) { return 0 }'
         },
@@ -29,7 +29,6 @@ getTemplates = async (req, res, next) => {
             'type Z':'(a, b) { return 0 }',
             'type B':'(a, b) { return 0 }',
             'type C':'(a, b) { return 0 }',
-            'type D':'(a, b) { return 0 }',
             'custom':'(a, b) { return 0 }'
         },
 

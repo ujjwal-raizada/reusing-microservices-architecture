@@ -3,9 +3,9 @@ getAll = async (req, res, next) => {
       'types': ['one-to-one', 'one-to-many', 'batching', 'splitting', 'none'],
       'subTypes': {
         'one-to-one': ['type A', 'type B', 'type C', 'type D', 'custom'],
-        'one-to-many': ['type E', 'type C', 'type D', 'type A', 'custom'],
+        'one-to-many': ['type X', 'type C', 'type D', 'type B', 'custom'],
         'batching': ['type F', 'type D', 'type A', 'type B', 'custom'],
-        'splitting': ['type G', 'type A', 'type B', 'type C', 'custom'],
+        'splitting': ['type G', 'type Z', 'type B', 'type C', 'custom'],
         'none': ['none']
       }
     }
