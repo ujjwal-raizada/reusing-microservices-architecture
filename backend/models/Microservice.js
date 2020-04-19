@@ -41,6 +41,11 @@ var MicroserviceSchema = new Schema({
         required : true,
         unique : true
     },
+    batchSize: {
+        type : Number,
+        required : true,
+        unique : true
+    },
   });
 
 var MicroserviceModel = mongoose.model("Microservice", MicroserviceSchema);
