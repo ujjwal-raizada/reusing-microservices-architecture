@@ -29,13 +29,12 @@ router.use(function(req, res, next) {
 
 router.get(getRoute, function(req, res) {
     var data = handleGetBatch()
-    console.log(data)
     if(data) {
         res.json(data)
     } else {
         axios.get(hostURL + getRoute)
         .then(response => {
-            getBatch = response.data
+            getBatch.push(response.data)
             data = handleGetBatch()
             res.json(data)
         })
@@ -52,12 +51,12 @@ router.post(postRoute, function(req, res) {
     if(data) {
         axios.post(hostURL + postRoute, data)
         .then(response => {
-            batch = []
+            postBatch = []
             res.json(response.data)
         })
         .catch(err => {
             console.log(err)
-            batch.pop()
+            postBatch.pop()
             res.send("Error")
         })
     } else {
@@ -76,6 +75,9 @@ handleGetBatch = () => {
 handlePostBatch = (data) => {
     postBatch.push(data)
     if(postBatch.length === batchSize) {
+        if(batchSize === 1) {
+            return postBatch[0]
+        }
         return postBatch
     } else {
         return null

@@ -16,23 +16,19 @@ var RequestedMSSchema = new Schema({
     url : {
         type : String,
         required : true,
-        unique : true
     },
     getRoute : {
         type : String,
         required : true,
-        unique : true
     },
     postRoute : {
         type : String,
         required : true,
-        unique : true
     },
     batchSize: {
         type : Number,
         required : true,
-        unique : true
-    }, 
+    },
   });
 
 var RequestedMSModel = mongoose.model("RequestedMS", RequestedMSSchema);
