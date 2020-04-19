@@ -118,6 +118,10 @@ class ServiceMapping extends Component {
                 console.log('Mapping has been updated.')
                 console.log(this.state.microserviceMapping)
             })
+            .catch(error => {
+                console.log(error)
+                alert('Error in sending the request!!!')
+            })
             
         } else if(event.target.name === 'cancel'){
             console.log('Process cancelled.')
