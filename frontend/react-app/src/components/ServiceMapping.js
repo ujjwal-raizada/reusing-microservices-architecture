@@ -16,10 +16,18 @@ class ServiceMapping extends Component {
         },
         microserviceMapping: null,
         allMappings: null,
-        requestedMicroserviceName: 'B'
+        requestedMS: '',
+        existingMS: ''
     }
 
     componentDidMount() {
+        const existingMS = sessionStorage.getItem('existingMS')
+        const requestedMS = sessionStorage.getItem('requestedMS')
+        this.setState({
+            existingMS: existingMS,
+            requestedMS: requestedMS
+        }) 
+
         const host = config.get('host_url')
         axios.get(host + config.get('routes.allMappings'))
         .then(res => {
@@ -27,6 +35,7 @@ class ServiceMapping extends Component {
                 allMappings: res.data.allMappings
             })
         })
+        .catch(console.log)
 
         axios.get(host + config.get('routes.templates'))
         .then(res => {
@@ -35,21 +44,36 @@ class ServiceMapping extends Component {
                 templates: res.data.templates
             })
         })
+        .catch(console.log)
         
-        axios.post(host + config.get('routes.microservice'), {'microservice' : 'B'})
+        axios.post(host + config.get('routes.microservice'),
+            {'microservice' : requestedMS}
+        )
         .then(res => {
-            this.setState({
-                requestedMicroservice: res.data.requestedMicroservice
-            })
+            if(res.data.status) {
+                this.setState({
+                    requestedMicroservice: res.data.microservice
+                })
+            } else {
+                console.log('Error in fetching data')
+            }
         })
+        .catch(console.log)
 
-        axios.post(host + config.get('routes.mapping'), {'existing': 'A', 'requested': 'B'})
+        axios.post(host + config.get('routes.mapping'),
+            {'existing': existingMS, 'requested': requestedMS}
+        )
         .then(res => {
-            this.setState({
-                microserviceMapping: res.data.microserviceMapping,
-                originalMapping: res.data.microserviceMapping
-            })
+            if(res.data.status) {
+                this.setState({
+                    microserviceMapping: res.data.mapping,
+                    originalMapping: res.data.mapping
+                })
+            } else {
+                console.log('Error in fetching data')
+            }            
         })
+        .catch(console.log)
     }
 
     selectParam = param => {
@@ -113,7 +137,7 @@ class ServiceMapping extends Component {
         if(event.target.name === 'submit') {
             axios.post(config.get('host_url') + config.get('routes.updateMapping'), {
                 microserviceMapping: this.state.microserviceMapping,
-                requestedMicroserviceName: this.state.requestedMicroserviceName
+                requestedMicroserviceName: this.state.requestedMS
             }).then(res => {
                 console.log('Mapping has been updated.')
                 console.log(this.state.microserviceMapping)
