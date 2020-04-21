@@ -1,83 +1,25 @@
-import React, { Component } from 'react';
-import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
-import '../../node_modules/font-awesome/css/font-awesome.min.css'; 
-import axios from 'axios';
-import './sidebar.css' ;
+import React, { Component } from 'react'
+import {Navbar, Nav} from 'react-bootstrap'
+
 
 class Sidebar extends Component {
-    state = { 
-        loadStatus:false 
-     }
-
-    componentWillMount(){
-        axios.get('http://localhost:8080/existing/all').then(res=>{
-          this.setState({micros:res.data.micros,loadStatus:true});
-          console.log(res.data.micros);
-        })
-    }
-
-    render() { 
-        var micros = this.state.micros ;
-        if(this.state.loadStatus==true){
-            micros = micros.map(function(micro,index){
-              return(
-                  <NavItem key= {micro._id}  eventkey = {micro._id} onClick = {() => this.props.renderMicroservice(micro._id)}>
-                      <NavText>
-                          {micro.title}
-                      </NavText>
-                  </NavItem>
-              )
-            }.bind(this));
-          }
-
-        return ( <SideNav
-            onSelect={(selected) => {
-                // const to = '/' + selected;
-                // if (location.pathname !== to) {
-                //     history.push(to);
-                // }
-
-            }}
-        >
-            <SideNav.Toggle />
-            <SideNav.Nav defaultSelected="Microservices">
-                <NavItem eventKey="Home">
-                    <NavIcon>
-                        <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
-                    </NavIcon>
-                    <NavText>
-                        Home
-                    </NavText>
-                </NavItem>
-                <NavItem eventKey="Microservices">
-                    <NavIcon>
-                        <i className="fa fa-cubes" aria-hidden="true" style={{ fontSize: '1.75em' }} />
-                    </NavIcon>
-                    <NavText>
-                        Microservices
-                    </NavText>
-                    {micros}
-                </NavItem>
-                <NavItem eventKey="Reports">
-                    <NavIcon>
-                        <i className="fa fa-wpforms" style={{ fontSize: '1.75em' }} />
-                    </NavIcon>
-                    <NavText>
-                        Reports
-                    </NavText>
-                </NavItem>
-                <NavItem eventKey="Setting">
-                    <NavIcon>
-                        <i className="fa fa-cogs" style={{ fontSize: '1.75em' }} />
-                    </NavIcon>
-                    <NavText>
-                        Settings
-                    </NavText>
-                </NavItem>
-            </SideNav.Nav>
-        </SideNav> );
-    }
+  render() { 
+    return ( 
+      <Navbar bg="dark" variant="dark">
+        <Nav className="flex-column">
+          <Nav.Item>
+            <Nav.Link href="/"> <strong> Home </strong> </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/requests"> <strong> Requests </strong> </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/services"> <strong> Services </strong> </Nav.Link>
+          </Nav.Item>
+        </Nav>
+      </Navbar>   
+    );
+  }
 }
 
 export default Sidebar; 
