@@ -1,5 +1,5 @@
 import React, { Component,Fragment } from 'react'
-import {Row, Col, Container, Accordion, Card, } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import axios from 'axios'
 import config from 'react-global-configuration'
 import Header from './Header'
@@ -7,9 +7,10 @@ import Sidebar from './Sidebar'
 import RequestList from './RequestList'
 import RequestDetail from './RequestDetail'
 
+
 class Requests extends Component {
   state = {
-    requests: [],
+    requests: null,
     requestId: null
   }
 
@@ -31,7 +32,7 @@ class Requests extends Component {
 
   setSelected = event => {
     event.preventDefault()
-    const requestId = event.target.name
+    const requestId = event.target.id
     sessionStorage.setItem('requestId', requestId)
     this.setState({
       requestId: requestId
@@ -58,10 +59,13 @@ class Requests extends Component {
           </Col>
           <Col xs={6}>
             <div>
-              <RequestList 
+              {
+                requests &&
+                <RequestList 
                 requests={requests} 
                 handleSelect={this.setSelected}
-              />
+                />
+              }              
             </div>
           </Col>
           <Col>
@@ -70,6 +74,7 @@ class Requests extends Component {
             <RequestDetail 
               requestId={requestId} 
               handleReset={this.resetSelected}
+              controls={true}
             />
           }
           </Col>
