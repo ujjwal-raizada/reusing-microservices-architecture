@@ -13,7 +13,7 @@ class RequestDetail extends Component {
     const { requestId } = this.props
     const url = config.get('host_url') + config.get('routes.requestedById')
 
-    axios.post(url, requestId)
+    axios.post(url, {micro_id: requestId})
     .then(res => {
       this.setState({
         requestDetail: res.data.micro
@@ -24,7 +24,7 @@ class RequestDetail extends Component {
 
   render() {
     if(this.state.requestDetail == null) {
-      return ("Request not found!!")
+      return null
     }
 
     const { title, description, params, url, 

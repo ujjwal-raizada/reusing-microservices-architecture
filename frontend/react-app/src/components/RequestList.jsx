@@ -1,16 +1,17 @@
-import React, { Component,Fragment } from 'react';
+import React, { Component,Fragment } from 'react'
 import { Accordion, Card, ListGroup, Row, Col,
   ButtonGroup, Button } from 'react-bootstrap'
+
 
 class RequestList extends Component {
   render() { 
 
     var requestList = this.props.requests.map((request, index) => {
-      const { title, description, params, url, 
+      const { _id, title, description, params, url, 
         getRoute, postRoute, batchSize} = request
       
-      var parameters = params.map(param => (
-        <ListGroup.Item>{param}</ListGroup.Item> 
+      var parameters = params.map((param, ind) => (
+        <ListGroup.Item key={ind}>{param}</ListGroup.Item> 
       ))
 
       return (
@@ -48,11 +49,12 @@ class RequestList extends Component {
               <Row>
                 <Col xs={{ span: 4, offset: 8 }}>
                   <ButtonGroup size="sm" className="mb-2">
-                    <Button 
+                    <Button
+                      id={_id} 
                       variant="outline-dark"
                       onClick={this.props.handleSelect}
                       >
-                      Reset
+                      Select
                     </Button>
                   </ButtonGroup>
                 </Col>
@@ -71,4 +73,4 @@ class RequestList extends Component {
   }
 }
 
-export default RequestList;
+export default RequestList
