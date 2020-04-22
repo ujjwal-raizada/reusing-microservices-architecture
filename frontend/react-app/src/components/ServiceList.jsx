@@ -73,6 +73,22 @@ class ServiceList extends Component {
               <Card.Text>
                 {code_snippet}
               </Card.Text>
+              {
+                this.props.controls &&
+                <Row>
+                  <Col xs={{ span: 4, offset: 10 }}>
+                    <ButtonGroup size="sm" className="mb-2">
+                      <Button
+                        id={_id} 
+                        variant="outline-dark"
+                        onClick={this.props.handleAdd}
+                        >
+                        Add
+                      </Button>
+                    </ButtonGroup>
+                  </Col>
+                </Row>
+              }              
             </Card.Body>
           </Accordion.Collapse>
         </Card>
