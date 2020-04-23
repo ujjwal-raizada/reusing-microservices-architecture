@@ -7,6 +7,7 @@ import Requests from './components/Requests' ;
 import MappingContainer from './components/MappingContainer'
 import RegisterService from './components/RegisterService';
 import RegisterRequest from './components/RegisterRequest';
+import Status from './components/status'
 import NotFound from './components/NotFound'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route exact path = '/mapping' component = {MappingContainer} />
           <Route exact path = '/register/service' component = {RegisterService}  />
           <Route exact path = '/register/request' component = {RegisterRequest}  />
+          <Route exact path = '/status' component={Status} />
           <Route component = {NotFound} />
 				</Switch>
     </Router>  
