@@ -9,7 +9,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "nodemonConfig": {
-    "ignore": ["microservices/*"]
+    "ignore": [
+      "microservices/*"
+    ]
   },
   "author": "",
   "license": "ISC",
