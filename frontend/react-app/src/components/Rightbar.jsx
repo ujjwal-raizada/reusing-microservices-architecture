@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '../../node_modules/font-awesome/css/font-awesome.min.css'; 
 import axios from 'axios';
 import './sidebar.css' ;
+import config from 'react-global-configuration'
 
 class Rightbar extends Component {
     state = { 
@@ -11,9 +12,10 @@ class Rightbar extends Component {
      }
 
     componentWillMount(){
-        axios.get('http://localhost:8080/requested/all').then(res=>{
+        const url = config.get('host_url') + config.get('routes.allRequested')
+
+        axios.get(url).then(res=>{
           this.setState({micros:res.data.micros,loadStatus:true});
-        //   console.log(res.data.micros);
         })
     }
 

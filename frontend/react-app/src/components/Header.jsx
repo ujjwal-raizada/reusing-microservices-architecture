@@ -13,6 +13,7 @@ class Header extends Component {
               <NavDropdown.Item href="/register/service"> Service </NavDropdown.Item>
               <NavDropdown.Item href="/register/request"> Request </NavDropdown.Item>
               </NavDropdown>
+              <Nav.Link href="/status"> <strong> Status </strong> </Nav.Link>
           </Nav>
           <Form inline>
               <FormControl type="text" placeholder="Search" className="mr-sm-2" />

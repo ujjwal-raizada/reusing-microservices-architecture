@@ -2,6 +2,7 @@ import React , {Component} from 'react'
 import {Link} from 'react-router-dom';
 import './view_ms.css'
 import axios from 'axios'
+import config from 'react-global-configuration'
 
 class Each_MS extends Component{
   state={
@@ -11,7 +12,9 @@ class Each_MS extends Component{
 
   componentWillMount(){
     
-    axios.post("http://localhost:8080/existing/one",{micro_id:this.props.micro_id}).then(res => {
+    const url = config.get('host_url') + config.get('routes.existingById')
+
+    axios.post(url,{micro_id:this.props.micro_id}).then(res => {
       console.log("Data reached")
       this.setState({micro:res.data.micro,loadStatus:true})
     })

@@ -1,15 +1,17 @@
 import React , {Component} from 'react'
-import {Link} from 'react-router-dom'
 import Each_MS from './each-ms.js'
 import './view_ms.css'
 import axios from 'axios'
+import config from 'react-global-configuration'
 
 class Microservices extends Component{
   state={
     loadStatus:false 
   }
   componentWillMount(){
-    axios.get('http://localhost:8080/existing/all').then(res=>{
+
+    const url = config.get('host_url') + config.get('routes. allExisting')
+    axios.get(url).then(res=>{
       this.setState({micros:res.data.micros,loadStatus:true});
       console.log(res.data.micros);
     })
@@ -22,7 +24,6 @@ class Microservices extends Component{
           <Each_MS key= {micro._id} micro_id={micro._id} link={false}/>
       )
     }.bind(this));
-    // console.log("micros"+ micros) ; 
   }
     return(
       <div className="wrap">
