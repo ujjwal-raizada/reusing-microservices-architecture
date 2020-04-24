@@ -7,7 +7,7 @@ import Requests from './components/Requests' ;
 import MappingContainer from './components/MappingContainer'
 import RegisterService from './components/RegisterService';
 import RegisterRequest from './components/RegisterRequest';
-import Status from './components/status'
+import Status from './components/Status'
 import NotFound from './components/NotFound'
 
 function App() {
