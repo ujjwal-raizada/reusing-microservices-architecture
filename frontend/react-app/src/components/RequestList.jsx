@@ -1,6 +1,8 @@
-import React, { Component,Fragment } from 'react'
-import { Accordion, Card, ListGroup, Row, Col,
-  ButtonGroup, Button } from 'react-bootstrap'
+import React, { Component } from 'react'
+import { Accordion, Card, Row, Col, ButtonGroup,
+  Button } from 'react-bootstrap'
+import CardText from './CardText'
+import CardListGroup from './CardListGroup'
 
 
 class RequestList extends Component {
@@ -8,50 +10,26 @@ class RequestList extends Component {
 
     var requestList = this.props.requests.map((request, index) => {
       const { _id, title, description, params, url, 
-        getRoute, postRoute, batchSize} = request
-      
-      var parameters = params.map((param, ind) => (
-        <ListGroup.Item key={ind}>{param}</ListGroup.Item> 
-      ))
+        getRoute, postRoute, batchSize } = request
 
       return (
-        <Card key={index}>
+        <Card key={_id}>
           <Accordion.Toggle as={Card.Header} eventKey={index}>
             {title}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey={index}>
             <Card.Body>
-              <Card.Title>Desciption</Card.Title>
-              <Card.Text>
-                {description}
-              </Card.Text>
-              <Card.Title>Parameters</Card.Title>
-              <Card.Text>
-                <ListGroup horizontal>
-                  {parameters}
-                </ListGroup>            
-              </Card.Text>
-              <Card.Title>Host URL</Card.Title>
-              <Card.Text>
-                {url}
-              </Card.Text>
-              <Card.Title>Routes</Card.Title>
-              <Card.Text>
-                <ListGroup horizontal>
-                <ListGroup.Item>{getRoute}</ListGroup.Item> 
-                <ListGroup.Item>{postRoute}</ListGroup.Item> 
-                </ListGroup>
-              </Card.Text>
-              <Card.Title>Batch Size</Card.Title>
-              <Card.Text>
-                {batchSize}
-              </Card.Text>
+              <CardText title="Description" text={description}/>
+              <CardListGroup title="Parameters" list={params}/>
+              <CardText title="Host URL" text={url}/>
+              <CardListGroup title="Routes" list={[getRoute, postRoute]}/>
+              <CardText title="Batch Size" text={batchSize}/>              
               <Row>
-                <Col xs={{ span: 4, offset: 8 }}>
+                <Col xs={{ span: 4, offset: 10 }}>
                   <ButtonGroup size="sm" className="mb-2">
                     <Button
                       id={_id} 
-                      variant="outline-dark"
+                      variant="outline-primary"
                       onClick={this.props.handleSelect}
                       >
                       Select

@@ -1,7 +1,7 @@
-import React, { Component,Fragment } from 'react';
-import Header from './Header';
-import Sidebar from './Sidebar' ;
+import React, { Component, Fragment } from 'react'
 import {Row, Col} from 'react-bootstrap'
+import Header from './Header'
+import Sidebar from './Sidebar'
 
 
 class Home extends Component {
@@ -15,11 +15,11 @@ class Home extends Component {
           </Col>
           <Col>
             <h2 className="text-center"> Welcome to the <br/> Portal!!!</h2>
-          </Col>    
+          </Col>
         </Row>
-      </Fragment>        
+      </Fragment>
     )
   }
 }
 
-export default Home;
+export default Home

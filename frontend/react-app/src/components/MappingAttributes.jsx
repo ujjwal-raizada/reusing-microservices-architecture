@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Form, Container, Row, ButtonGroup, Button } from 'react-bootstrap'
-import MonacoEditor from 'react-monaco-editor';
+import MonacoEditor from 'react-monaco-editor'
 import Multiselect from './Multiselect'
+
 
 class MappingAttributes extends Component {
     
@@ -24,7 +25,7 @@ class MappingAttributes extends Component {
         }        
         var { type, subType } = this.props.microserviceMapping
         var code = this.props.microserviceMapping.function.code
-        {/*TODO: Finalise logic for template updation */}
+        
         if(code.length === 0) {
             this.props.handleCode(this.props.templates[type][subType])
         }
@@ -47,7 +48,7 @@ class MappingAttributes extends Component {
                 <Row>
                     < Multiselect
                         args = {this.props.microserviceMapping.function.arguments}
-                        parameters = {this.props.requestedMicroservice.parameters}
+                        parameters = {this.props.requestedMicroservice.params}
                         handleArguments = {this.props.handleArguments}
                     />
                 </Row>

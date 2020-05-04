@@ -1,24 +1,30 @@
-import React, { Component,Fragment } from 'react';
-import {Row, Col} from 'react-bootstrap'
+import React, { Component, Fragment } from 'react'
+import { Row, Col } from 'react-bootstrap'
 import axios from 'axios'
 import config from 'react-global-configuration'
-import Header from './Header';
-import Sidebar from './Sidebar' ;
+import Header from './Header'
+import Sidebar from './Sidebar'
+import SelectedServices from './SelectedServices'
 import ServiceList from './ServiceList'
 import RequestDetail from './RequestDetail'
-import SelectedServices from './SelectedServices'
+
 
 class Services extends Component {
   state = {
     services: null,
     requestId: null,
-    serviceIds: null
+    serviceIds: []
   }
 
   componentDidMount() {
     const requestId = sessionStorage.getItem('requestId')
     var serviceIds = sessionStorage.getItem('serviceIds')
-    serviceIds = serviceIds.split(/\s*,\s*/)
+
+    if(serviceIds && serviceIds !== '') {
+      serviceIds = serviceIds.slice(0, -2).split(/\s*,\s*/)
+    } else {
+      serviceIds = []
+    }
 
     this.setState({
       requestId: requestId,
@@ -43,7 +49,7 @@ class Services extends Component {
       serviceIds = ''
     serviceIds = serviceIds + serviceId + ', '
     sessionStorage.setItem('serviceIds', serviceIds)
-    serviceIds = serviceIds.split(/\s*,\s*/)
+    serviceIds = serviceIds.slice(0, -2).split(/\s*,\s*/)
     this.setState({
       serviceIds: serviceIds
     })
@@ -53,7 +59,7 @@ class Services extends Component {
     event.preventDefault()
     var serviceIds = sessionStorage.getItem('serviceIds')
 
-    if(serviceIds !== '') {
+    if(serviceIds && serviceIds !== '') {
       serviceIds = serviceIds.slice(0, -2)
       var secondLast = serviceIds.lastIndexOf(', ')
       var newLength = (secondLast !== -1 ? secondLast + 2 : 0)
@@ -61,7 +67,11 @@ class Services extends Component {
 
       sessionStorage.setItem('serviceIds', serviceIds)
 
-      serviceIds = serviceIds.split(/\s*,\s*/)      
+      if(serviceIds !== '')
+        serviceIds = serviceIds.slice(0, -2).split(/\s*,\s*/) 
+      else
+        serviceIds = []
+         
       this.setState({
         serviceIds: serviceIds
       })
@@ -82,39 +92,36 @@ class Services extends Component {
     return (
       <Fragment>
         <Header/>
-        <Row >
+        <Row>
           <Col xs={2}>
             <Sidebar/>
           </Col>
-          <Col xs={6}>
+          <Col xs={6} style={{maxHeight: 525, overflowY: 'auto'}}>
             {
-              services && serviceIds &&
-              <SelectedServices 
-                services={services} 
-                serviceIds={serviceIds}
-                handlePop={this.popService}
+              services && 
+              <Fragment>
+                <SelectedServices 
+                  services={services} 
+                  serviceIds={serviceIds}
+                  handlePop={this.popService}
                 />
-            }  
-            <div>
-              {
-                services &&
                 <ServiceList 
-                services={services} 
-                handleAdd={this.addService}
-                controls={true}
-              />
-              }              
-            </div>
+                  services={services} 
+                  handleAdd={this.addService}
+                  controls={true}
+                />
+              </Fragment>              
+            }     
           </Col>
           <Col>
-          {
-            requestId && 
-            <RequestDetail 
-              requestId={requestId} 
-              handleReset={this.resetRequested}
-              controls={true}
-            />
-          }
+            {
+              requestId && 
+              <RequestDetail 
+                requestId={requestId} 
+                handleReset={this.resetRequested}
+                controls={true}
+              />
+            }
           </Col>
         </Row>
       </Fragment>  
@@ -122,4 +129,4 @@ class Services extends Component {
   }
 }
 
-export default Services;
+export default Services

@@ -4,9 +4,6 @@ import { Redirect, Link } from "react-router-dom";
 //import { withRouter } from "react-router";
 
 export class Login extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   validate = () =>{
     console.log("I'm in") ; 
@@ -19,7 +16,7 @@ export class Login extends React.Component {
         <div className="header-login">Login</div>
         <div className="content">
           <div className="image">
-            <img src={loginImg} />
+            <img src={loginImg} alt="Img" />
           </div>
           <div className="form">
             <div className="form-group">

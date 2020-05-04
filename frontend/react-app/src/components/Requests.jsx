@@ -1,4 +1,4 @@
-import React, { Component,Fragment } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import axios from 'axios'
 import config from 'react-global-configuration'
@@ -48,35 +48,34 @@ class Requests extends Component {
   }
   
   render() { 
-    const { requestId, requests } = this.state
+    const { requests, requestId } = this.state
 
     return (
       <Fragment>
         <Header/>
-        <Row >
+        <Row>
           <Col xs={2}>
             <Sidebar/>
           </Col>
-          <Col xs={6}>
-            <div>
-              {
-                requests &&
-                <RequestList 
+          <Col xs={6} style={{maxHeight: 525, overflowY: 'auto'}}>
+            {
+              requests &&
+              <RequestList 
                 requests={requests} 
                 handleSelect={this.setSelected}
-                />
-              }              
-            </div>
+              />
+            }
           </Col>
           <Col>
-          {
-            requestId && 
-            <RequestDetail 
-              requestId={requestId} 
-              handleReset={this.resetSelected}
-              controls={true}
-            />
-          }
+            {
+              requestId && 
+              <RequestDetail
+                key={requestId} 
+                requestId={requestId} 
+                handleReset={this.resetSelected}
+                controls={true}
+              />
+            }
           </Col>
         </Row>
       </Fragment>        
@@ -84,4 +83,4 @@ class Requests extends Component {
   }
 }
 
-export default Requests;
+export default Requests

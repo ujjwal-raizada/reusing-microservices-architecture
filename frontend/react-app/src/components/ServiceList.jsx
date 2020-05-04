@@ -1,78 +1,33 @@
-import React, { Component, Fragment } from 'react'
-import { Accordion, Card, ListGroup, Row, Col,
-  ButtonGroup, Button } from 'react-bootstrap'
+import React, { Component } from 'react'
+import { Accordion, Card, Row, Col, ButtonGroup, 
+  Button } from 'react-bootstrap'
+import CardText from './CardText'
+import CardListGroup from './CardListGroup'
+
 
 class ServiceList extends Component {
   render() { 
 
     var serviceList = this.props.services.map((service, index) => {
       const { _id, title, developer, keywords, documentation, code_snippet,
-        tech_stack, params, url, getRoute, postRoute, batchSize} = service
-      
-      var parameterList = params.map((param, ind) => (
-        <ListGroup.Item key={ind}>{param}</ListGroup.Item> 
-      ))
-
-      var keywordList = keywords.map((keyword, ind) => (
-        <ListGroup.Item key={ind}>{keyword}</ListGroup.Item> 
-      ))
-
-      var techList = tech_stack.map((item, ind) => (
-        <ListGroup.Item key={ind}>{item}</ListGroup.Item> 
-      ))
+        tech_stack, params, url, getRoute, postRoute, batchSize } = service
 
       return (
-        <Card key={index}>
+        <Card key={_id}>
           <Accordion.Toggle as={Card.Header} eventKey={index}>
             {title}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey={index}>
-            <Card.Body>
-              <Card.Title>Developer</Card.Title>
-              <Card.Text>
-                {developer}
-              </Card.Text>
-              <Card.Title>Keywords</Card.Title>
-              <Card.Text>
-                <ListGroup horizontal>
-                  {keywordList}
-                </ListGroup>            
-              </Card.Text>              
-              <Card.Title>Parameters</Card.Title>
-              <Card.Text>
-                <ListGroup horizontal>
-                  {parameterList}
-                </ListGroup>            
-              </Card.Text>
-              <Card.Title>Host URL</Card.Title>
-              <Card.Text>
-                {url}
-              </Card.Text>
-              <Card.Title>Routes</Card.Title>
-              <Card.Text>
-                <ListGroup horizontal>
-                <ListGroup.Item>{getRoute}</ListGroup.Item> 
-                <ListGroup.Item>{postRoute}</ListGroup.Item> 
-                </ListGroup>
-              </Card.Text>
-              <Card.Title>Batch Size</Card.Title>
-              <Card.Text>
-                {batchSize}
-              </Card.Text>
-              <Card.Title>Tech Stack</Card.Title>
-              <Card.Text>
-                <ListGroup horizontal>
-                  {techList}
-                </ListGroup>            
-              </Card.Text>   
-              <Card.Title>Documentation</Card.Title>
-              <Card.Text>
-                {documentation}
-              </Card.Text>
-              <Card.Title>Code Snippets</Card.Title>
-              <Card.Text>
-                {code_snippet}
-              </Card.Text>
+            <Card.Body>              
+              <CardText title="Developer" text={developer}/>
+              <CardListGroup title="Keywords" list={keywords}/>
+              <CardListGroup title="Parameters" list={params}/> 
+              <CardText title="Host URL" text={url}/>
+              <CardListGroup title="Routes" list={[getRoute, postRoute]}/>
+              <CardText title="Batch Size" text={batchSize}/>
+              <CardListGroup title="Techstack" list={tech_stack}/>
+              <CardText title="Documentation" text={documentation}/>
+              <CardText title="Code Snippets" text={code_snippet}/>              
               {
                 this.props.controls &&
                 <Row>
@@ -80,7 +35,7 @@ class ServiceList extends Component {
                     <ButtonGroup size="sm" className="mb-2">
                       <Button
                         id={_id} 
-                        variant="outline-dark"
+                        variant="outline-primary"
                         onClick={this.props.handleAdd}
                         >
                         Add
