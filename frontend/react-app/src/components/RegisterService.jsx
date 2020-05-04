@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { Form, Col, Button, Container } from 'react-bootstrap'
 import axios from 'axios'
 import config from 'react-global-configuration'
-
 import Header from './Header'
+
 
 class RegisterService extends Component {
 
@@ -23,7 +23,7 @@ class RegisterService extends Component {
 
   handleChange = event => {
     event.preventDefault()
-    const {id, value} = event.target
+    const { id, value } = event.target
     this.setState({
         [id]: value      
     })
@@ -39,7 +39,7 @@ class RegisterService extends Component {
     
     axios.post(route, {data: data}) 
     .then(res => {
-      if(res.data == '0') {
+      if(res.data === '0') {
         alert('Microservice has been added')
       } else {
         alert('Error in addition!')
@@ -67,7 +67,7 @@ class RegisterService extends Component {
                   placeholder="Name of the microservice"
                   value={this.state.title}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
               <Form.Group as={Col} controlId="developer">
                 <Form.Label> Developer </Form.Label>
@@ -76,7 +76,7 @@ class RegisterService extends Component {
                   placeholder="Developed By..."
                   value={this.state.developer}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
             </Form.Row>
 
@@ -88,7 +88,7 @@ class RegisterService extends Component {
                   placeholder="comma(,) separated"
                   value={this.state.keywords}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
               <Form.Group as={Col} controlId="tech_stack">
                 <Form.Label> Tech Stack </Form.Label>
@@ -97,7 +97,7 @@ class RegisterService extends Component {
                   placeholder="comma(,) separated"
                   value={this.state.tech_stack}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
             </Form.Row>
 
@@ -109,7 +109,7 @@ class RegisterService extends Component {
                   placeholder="comma(,) separated"
                   value={this.state.params}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
               <Form.Group as={Col} controlId="batchSize">
                 <Form.Label> Batch Size </Form.Label>
@@ -118,7 +118,7 @@ class RegisterService extends Component {
                   placeholder="(1 if no batching supported)"
                   value={this.state.batchSize}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
             </Form.Row>
 
@@ -130,7 +130,7 @@ class RegisterService extends Component {
                   placeholder="Site URL"
                   value={this.state.url}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
               <Form.Group as={Col} controlId="getRoute">
                 <Form.Label> Get Route </Form.Label>
@@ -139,7 +139,7 @@ class RegisterService extends Component {
                   placeholder="Get Route"
                   value={this.state.getRoute}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
               <Form.Group as={Col} controlId="postRoute">
                 <Form.Label> Post Route </Form.Label>
@@ -148,7 +148,7 @@ class RegisterService extends Component {
                   placeholder="Post Route"
                   value={this.state.postRoute}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
             </Form.Row>
 
@@ -160,7 +160,7 @@ class RegisterService extends Component {
                   placeholder="Documentation"
                   value={this.state.documentation}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
             </Form.Row>
             <Form.Row>
@@ -171,7 +171,7 @@ class RegisterService extends Component {
                   placeholder="Code Snippet"
                   value={this.state.code_snippet}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
             </Form.Row>
 

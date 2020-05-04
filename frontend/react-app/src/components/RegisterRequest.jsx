@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { Form, Col, Button, Container } from 'react-bootstrap'
 import axios from 'axios'
 import config from 'react-global-configuration'
-
 import Header from './Header'
+
 
 class RegisterService extends Component {
 
@@ -33,7 +33,7 @@ class RegisterService extends Component {
     
     axios.post(route, {data: data}) 
     .then(res => {
-      if(res.data == '0') {
+      if(res.data === '0') {
         alert('Request has been added')
       } else {
         alert('Error in addition!')
@@ -61,7 +61,7 @@ class RegisterService extends Component {
                   placeholder="Name of the microservice"
                   value={this.state.title}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
             </Form.Row>
 
@@ -73,7 +73,7 @@ class RegisterService extends Component {
                   placeholder="Description"
                   value={this.state.description}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
             </Form.Row>
 
@@ -85,7 +85,7 @@ class RegisterService extends Component {
                   placeholder="comma(,) separated"
                   value={this.state.params}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
               <Form.Group as={Col} controlId="batchSize">
                 <Form.Label> Batch Size </Form.Label>
@@ -94,7 +94,7 @@ class RegisterService extends Component {
                   placeholder="(1 if no batching supported)"
                   value={this.state.batchSize}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
             </Form.Row>
 
@@ -106,7 +106,7 @@ class RegisterService extends Component {
                   placeholder="Site URL"
                   value={this.state.url}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
               <Form.Group as={Col} controlId="getRoute">
                 <Form.Label> Get Route </Form.Label>
@@ -115,7 +115,7 @@ class RegisterService extends Component {
                   placeholder="Get Route"
                   value={this.state.getRoute}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
               <Form.Group as={Col} controlId="postRoute">
                 <Form.Label> Post Route </Form.Label>
@@ -124,7 +124,7 @@ class RegisterService extends Component {
                   placeholder="Post Route"
                   value={this.state.postRoute}
                   onChange={this.handleChange}
-                  />
+                />
               </Form.Group>
             </Form.Row>
 

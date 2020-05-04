@@ -1,7 +1,6 @@
 import React from "react"
 import "./comblogin.scss"
-import { Login, Register } from "./index" 
-import { Redirect } from "react-router-dom";
+import { Login, Register } from "./index"
 
 class Combologin extends React.Component {
     constructor(props) {

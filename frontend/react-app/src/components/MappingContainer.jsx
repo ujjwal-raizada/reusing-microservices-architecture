@@ -3,15 +3,29 @@ import ServiceMapping from './ServiceMapping'
 import Header from './Header'
 
 class RegisterService extends Component {
+
   componentDidMount() {
-    sessionStorage.setItem('existingMS', 'test1')
-    sessionStorage.setItem('requestedMS', 'Open Quiz Portal')
+    var existingMS = sessionStorage.getItem('serviceIds')
+    var requestedMS = sessionStorage.getItem('requestId')
+
+    if(!requestedMS || requestedMS === '') {
+      this.props.history.push(`/requests`)
+      return
+    }
+    if(!existingMS || existingMS === '') {
+      this.props.history.push(`/services`)
+      return
+    }
   }
+
   render () {
+    var existingMS = sessionStorage.getItem('serviceIds')
+    var requestedMS = sessionStorage.getItem('requestId')
     return (
+      existingMS && existingMS.length && requestedMS && requestedMS.length &&
       <Fragment>
         <Header />
-        <ServiceMapping />
+        <ServiceMapping existingMS={existingMS} requestedMS={requestedMS}/>
       </Fragment>
     )
   }

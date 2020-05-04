@@ -1,7 +1,9 @@
-import React, { Component} from 'react'
-import { Card, ButtonGroup, Button, ListGroup, Row, Col } from 'react-bootstrap'
+import React, { Component } from 'react'
+import { Card, ButtonGroup, Button, Row, Col } from 'react-bootstrap'
 import axios from 'axios'
 import config from 'react-global-configuration'
+import CardText from './CardText'
+import CardListGroup from './CardListGroup'
 
 
 class RequestDetail extends Component {
@@ -23,46 +25,22 @@ class RequestDetail extends Component {
   }
 
   render() {
-    if(this.state.requestDetail == null) {
+    if(!this.state.requestDetail) {
       return null
     }
 
     const { title, description, params, url, 
       getRoute, postRoute, batchSize} = this.state.requestDetail
-    
-    var parameters = params.map(param => (
-      <ListGroup.Item>{param}</ListGroup.Item> 
-    ))
 
     return (
       <Card>
-        <Card.Header>{title}</Card.Header>
+        <Card.Header> {title} </Card.Header>
         <Card.Body>
-          <Card.Title>Desciption</Card.Title>
-          <Card.Text>
-            {description}
-          </Card.Text>
-          <Card.Title>Parameters</Card.Title>
-          <Card.Text>
-            <ListGroup horizontal>
-              {parameters}
-            </ListGroup>            
-          </Card.Text>
-          <Card.Title>Host URL</Card.Title>
-          <Card.Text>
-            {url}
-          </Card.Text>
-          <Card.Title>Routes</Card.Title>
-          <Card.Text>
-            <ListGroup horizontal>
-            <ListGroup.Item>{getRoute}</ListGroup.Item> 
-            <ListGroup.Item>{postRoute}</ListGroup.Item> 
-            </ListGroup>
-          </Card.Text>
-          <Card.Title>Batch Size</Card.Title>
-          <Card.Text>
-            {batchSize}
-          </Card.Text>
+          <CardText title="Description" text={description}/>
+          <CardListGroup title="Parameters" list={params}/>
+          <CardText title="Host URL" text={url}/>
+          <CardListGroup title="Routes" list={[getRoute, postRoute]}/>
+          <CardText title="Batch Size" text={batchSize}/>
           {
             this.props.controls &&
             <Row>
@@ -83,7 +61,7 @@ class RequestDetail extends Component {
                 </ButtonGroup>
               </Col>
             </Row>
-          }   
+          }
         </Card.Body>
       </Card>
     )
