@@ -5,7 +5,7 @@ getAll = (req, res) => {
       if (err) {
         console.log("Retreival Error:" + err);
       } else {
-        console.log("All objects sent sucessfully!!!");
+        console.log("All objects sent sucessfully!!!");  // TODO: Replace over-excited outputs
         res.send({ micros: All_micro_serv});
       }
     });

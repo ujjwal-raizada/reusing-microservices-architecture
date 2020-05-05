@@ -1,53 +1,36 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-var MicroserviceSchema = new Schema({
-    title: {
+var RequestedMicroserviceSchema = new Schema({
+    title: { 
         type: String,
         required: true,
         unique: true
-    },
-    keywords: [{
-        type: String
-    }],
-    developer: {
-        type: String,
-        required: false
     },  
-    documentation: {
+    description: {
         type: String
     },
-    codeSnippet: {
-        type: String
-    },
-    techStack: [{
-        type: String
-    }],
     params: [{
         type: String
     }],
     url: {
         type: String,
         required: true,
-        unique: true
     },
     getRoute: {
         type: String,
         required: true,
-        unique: true
     },
     postRoute: {
         type: String,
         required: true,
-        unique: true
     },
     batchSize: {
         type: Number,
         required: true,
-        unique: true
     }
 });
 
-var MicroserviceModel = mongoose.model("Microservice", MicroserviceSchema);
+var RequestedMicroserviceModel = mongoose.model("RequestedMS", RequestedMicroserviceSchema);
 
-module.exports = MicroserviceModel; 
+module.exports = RequestedMicroserviceModel;

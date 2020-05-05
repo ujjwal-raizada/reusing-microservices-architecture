@@ -1,4 +1,4 @@
-var RequestedMS = require("../../models/RequestedMS.js");
+var RequestedMS = require("../../models/RequestedMicroservice.js");
 
 getInfo = async (req, res, next) => {
   const { microservice } = req.body

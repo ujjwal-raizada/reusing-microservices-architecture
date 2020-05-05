@@ -6,7 +6,7 @@ add = (req,res) => {
       (err,obj) => {
         if(err) {
           console.log(err);
-          res.send('1')
+          res.send('1')  // TODO: Improve Error message
         } else {
           res.send('0')
         }

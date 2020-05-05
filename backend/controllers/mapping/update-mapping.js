@@ -14,7 +14,7 @@ updateMapping = async (req, res) => {
     )    
     if(status === 0) {
         console.log('Success')
-        res.send('Microservice has been updated!!')
+        res.send('Microservice has been updated.')
     } else {
         console.log('Error')
         res.send('Error')

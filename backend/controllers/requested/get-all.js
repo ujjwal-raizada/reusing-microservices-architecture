@@ -1,4 +1,4 @@
-var Requestmicro = require("../../models/RequestedMS.js");
+var Requestmicro = require("../../models/RequestedMicroservice.js");
 
 getAll = (req, res) => {
     Requestmicro.find({}, (err, All_micro_serv) => {

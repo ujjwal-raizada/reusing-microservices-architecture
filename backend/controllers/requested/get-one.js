@@ -1,4 +1,4 @@
-var Requestmicro = require("../../models/RequestedMS.js");
+var Requestmicro = require("../../models/RequestedMicroservice.js");
 
 getOne = (req, res) => {
     let micro_id = req.body.micro_id;
