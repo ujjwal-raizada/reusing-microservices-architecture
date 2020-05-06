@@ -8,7 +8,7 @@ class Sidebar extends Component {
       <Navbar bg="dark" variant="dark">
         <Nav className="flex-column">
           <Nav.Item>
-            <Nav.Link href="/"> <strong> Home </strong> </Nav.Link>
+            <Nav.Link href="/home"> <strong> Home </strong> </Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link href="/requests"> <strong> Requests </strong> </Nav.Link>
