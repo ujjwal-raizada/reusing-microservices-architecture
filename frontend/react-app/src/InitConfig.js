@@ -17,6 +17,8 @@ function InitConfig(production) {
       requestedById: `/requested/one`,
       allRequested: `/requested/all`,
       addRequested: `/requested/add`,
+      registerUser:`/signup`,
+      loginUser:'/login'
     }
   });
 }
