@@ -11,7 +11,7 @@ var TemplateSchema = new Schema({
         type: String,
         required: true
     },
-    mapping: {
+    transformation: {
         type: Schema.Types.ObjectId,
         ref: "Transformation"
     }
