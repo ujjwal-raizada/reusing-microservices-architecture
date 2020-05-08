@@ -164,3 +164,31 @@ def user_profile(username):
         return json.dumps(database["profile"][username])
     else:
         return json.dumps({"status": "failure", "message": "already exists"})
+
+
+# product endpoints
+@app.route("/order-api/products")
+def product_list():
+    return json.dumps(database["products"])
+
+
+@app.route("/order-api/products/add", methods=['POST'])
+def create_product():
+    req_data = request.get_json()
+    product = req_data["product"]
+    name = req_data["name"]
+
+    if (product not in database["products"]):
+        database["products"].append(product)
+        database["product-details"][product] = {"name": name, "orders": []}
+        return json.dumps({"status": "success"})
+    else:
+        return json.dumps({"status": "failure", "message": "already exists"})
+
+
+@app.route("/order-api/products/<product>")
+def product_profile(product):
+    if (product in database["products"]):
+        return json.dumps(database["product-details"][product])
+    else:
+        return json.dumps({"status": "failure", "message": "already exists"})
