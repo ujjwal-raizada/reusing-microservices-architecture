@@ -192,3 +192,43 @@ def product_profile(product):
         return json.dumps(database["product-details"][product])
     else:
         return json.dumps({"status": "failure", "message": "already exists"})
+
+
+# order endpoints
+@app.route("/order-api/orders")
+def order_list():
+    return json.dumps(database["orders"])
+
+
+@app.route("/order-api/orders/add", methods=['POST'])
+def add_order():
+    req_data = request.get_json()
+    username = req_data["username"]
+    product = req_data["product"]
+    order_time = req_data["time"]  # in epoch time, can be used to show mapping
+
+    if (username not in database["users"]):
+        return json.dumps({"status": "failure", "message": "user not exists"})
+    
+    if (product not in database["products"]):
+        return json.dumps({"status": "failure", "message": "product not exists"})
+    
+    database["orders"].append((username, product, order_time))
+    database["profile"][username]["orders"].append((product, order_time))
+    database["product-details"][product]["orders"].append((username, order_time))
+
+
+@app.route("/order-api/users/orders/<username>")
+def user_orders(username):
+    if (username in database["users"]):
+        return json.dumps(database["profile"][username]["orders"])
+    else:
+        return json.dumps({"status": "failure"})
+
+
+@app.route("/order-api/products/orders/<product>")
+def product_orders(product):
+    if (product in database["products"]):
+        return json.dumps(database["product-details"][product]["orders"])
+    else:
+        return json.dumps({"status": "failure"})
