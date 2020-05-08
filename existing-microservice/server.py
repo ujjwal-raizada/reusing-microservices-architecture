@@ -125,6 +125,42 @@ def reset_data():
     posts = []
     return "data reset successful."
 
+# this service is independent from blog service defined above
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+database = {}  # dict which will be used as database for orders api
+database["users"] = []
+database["products"] = []
+database["orders"] = []
+database["profile"] = {}
+database["product-details"] = {}
+
+@app.route('/order-api/')
+def home():
+    return "home-page"
+
+# user end points
+@app.route("/order-api/users")
+def user_list():
+    return json.dumps(database["users"])
+
+
+@app.route("/order-api/users/add", methods=['POST'])
+def create_user():
+    req_data = request.get_json()
+    username = req_data["username"]
+    name = req_data["name"]
+
+    if (username not in database["users"]):
+        database["users"].append(username)
+        database["profile"][username] = {"name": name, "orders": []}
+
+        return json.dumps({"status": "success"})
+    else:
+        return json.dumps({"status": "failure", "message": "already exists"})
+
+@app.route("/order-api/users/<username>")
+def user_profile(username):
+    if (username in database["users"]):
+        return json.dumps(database["profile"][username])
+    else:
+        return json.dumps({"status": "failure", "message": "already exists"})
