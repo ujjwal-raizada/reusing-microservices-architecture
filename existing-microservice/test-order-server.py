@@ -2,6 +2,7 @@ import time
 
 import requests
 
+# URL2 = "http://ujjwalraizada.pythonanywhere.com/order-api/"
 URL = "http://localhost:5000/order-api/"
 
 # create 2 users
@@ -126,4 +127,54 @@ time.sleep(1)
 print("printing placed orders...")
 
 r = requests.get(URL + "orders")
+print(r.text)
+
+
+time.sleep(1)
+# print user profiles
+r = requests.get(URL + "users/ujjwalraizada")
+print(r.text)
+
+r = requests.get(URL + "users/prakhargoenka")
+print(r.text)
+
+
+time.sleep(1)
+# print products profiles
+print("printing product profile...")
+
+r = requests.get(URL + "products/prod1")
+print(r.text)
+
+r = requests.get(URL + "products/prod2")
+print(r.text)
+
+
+# adding to kart
+print("adding two items to kart")
+data = {}
+data["username"] = "ujjwalraizada"
+data["product"] = "prod1"
+data["time"] = time.time()
+r = requests.post(URL + "kart/add", json=data)
+
+data["username"] = "ujjwalraizada"
+data["product"] = "prod2"
+data["time"] = time.time()
+r = requests.post(URL + "kart/add", json=data)
+
+
+time.sleep(1)
+# print user profiles
+print("printing profile with kart...")
+r = requests.get(URL + "users/ujjwalraizada")
+print(r.text)
+
+# checkout kart
+r = requests.get(URL + "kart/checkout/ujjwalraizada")
+
+time.sleep(1)
+# print user profiles
+print("printing profile after checkout...")
+r = requests.get(URL + "users/ujjwalraizada")
 print(r.text)

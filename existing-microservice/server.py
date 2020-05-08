@@ -152,7 +152,7 @@ def create_user():
 
     if (username not in database["users"]):
         database["users"].append(username)
-        database["profile"][username] = {"name": name, "orders": []}
+        database["profile"][username] = {"name": name, "orders": [], "kart": []}
 
         return json.dumps({"status": "success"})
     else:
@@ -216,6 +216,7 @@ def add_order():
     database["orders"].append((username, product, order_time))
     database["profile"][username]["orders"].append((product, order_time))
     database["product-details"][product]["orders"].append((username, order_time))
+    return json.dumps({"status": "success"})
 
 
 @app.route("/order-api/users/orders/<username>")
@@ -256,6 +257,40 @@ def add_bulk_order():
         database["product-details"][product]["orders"].append((username, order_time))
         res.append(json.dumps({"status": "success"}))
     return json.dumps(res)
+
+
+# kart endpoints
+@app.route("/order-api/kart/add", methods=['POST'])
+def add_to_kart():
+    req_data = request.get_json()
+    username = req_data["username"]
+    product = req_data["product"]
+    order_time = req_data["time"]  # in epoch time, can be used to show mapping
+
+    if (username not in database["users"]):
+        return json.dumps({"status": "failure", "message": "user not exists"})
+    
+    if (product not in database["products"]):
+        return json.dumps({"status": "failure", "message": "product not exists"})
+    
+    database["profile"][username]["kart"].append((product, order_time))
+    return json.dumps({"status": "success"})
+
+
+@app.route("/order-api/kart/checkout/<username>")
+def checkout_cart(username):
+    if (username not in database["users"]):
+        return json.dumps({"status": "failure", "message": "user not exists"})
+    
+    for item in database["profile"][username]["kart"]:
+
+        product = item[0]
+        order_time = item[1]
+        database["orders"].append((username, product, order_time))
+        database["profile"][username]["orders"].append((product, order_time))
+        database["product-details"][product]["orders"].append((username, order_time))
+    database["profile"][username]["kart"] = []
+    return json.dumps({"status": "success"})
 
 
 if __name__ == '__main__':
