@@ -232,3 +232,31 @@ def product_orders(product):
         return json.dumps(database["product-details"][product]["orders"])
     else:
         return json.dumps({"status": "failure"})
+
+
+@app.route("/order-api/orders/add/bulk", methods=['POST'])
+def add_bulk_order():
+    req_data = request.get_json()
+    res = []
+    for order in req_data:
+        username = order["username"]
+        product = order["product"]
+        order_time = order["time"]
+
+        if (username not in database["users"]):
+            res.append(json.dumps({"status": "failure", "message": "user not exists"}))
+            continue
+        
+        if (product not in database["products"]):
+            res.append(json.dumps({"status": "failure", "message": "product not exists"}))
+            continue
+        
+        database["orders"].append((username, product, order_time))
+        database["profile"][username]["orders"].append((product, order_time))
+        database["product-details"][product]["orders"].append((username, order_time))
+        res.append(json.dumps({"status": "success"}))
+    return json.dumps(res)
+
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
