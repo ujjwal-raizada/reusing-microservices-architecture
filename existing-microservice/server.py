@@ -25,7 +25,7 @@ def persistant(function):
 
         return_val = function()
         with open("user_data", "wb+") as file:
-                pickle.dump(posts, file)
+            pickle.dump(posts, file)
         return return_val
     return wrapper
 
@@ -134,18 +134,33 @@ database["orders"] = []
 database["profile"] = {}
 database["product-details"] = {}
 
+def load_database():
+    global database
+    with open("database", "rb+") as file:
+        database = pickle.load(file)
+
+def dump_database():
+    with open("database", "wb+") as file:
+        pickle.dump(database, file)
+
 @app.route('/order-api/')
 def home():
+    try:
+        load_database()
+    except Exception as _:
+        dump_database()
     return "home-page"
 
 # user end points
 @app.route("/order-api/users")
 def user_list():
+    load_database()
     return json.dumps(database["users"])
 
 
 @app.route("/order-api/users/add", methods=['POST'])
 def create_user():
+    load_database()
     req_data = request.get_json()
     username = req_data["username"]
     name = req_data["name"]
@@ -153,6 +168,7 @@ def create_user():
     if (username not in database["users"]):
         database["users"].append(username)
         database["profile"][username] = {"name": name, "orders": [], "kart": []}
+        dump_database()
 
         return json.dumps({"status": "success"})
     else:
@@ -160,6 +176,7 @@ def create_user():
 
 @app.route("/order-api/users/<username>")
 def user_profile(username):
+    load_database()
     if (username in database["users"]):
         return json.dumps(database["profile"][username])
     else:
@@ -169,11 +186,13 @@ def user_profile(username):
 # product endpoints
 @app.route("/order-api/products")
 def product_list():
+    load_database()
     return json.dumps(database["products"])
 
 
 @app.route("/order-api/products/add", methods=['POST'])
 def create_product():
+    load_database()
     req_data = request.get_json()
     product = req_data["product"]
     name = req_data["name"]
@@ -181,6 +200,8 @@ def create_product():
     if (product not in database["products"]):
         database["products"].append(product)
         database["product-details"][product] = {"name": name, "orders": []}
+        dump_database()
+
         return json.dumps({"status": "success"})
     else:
         return json.dumps({"status": "failure", "message": "already exists"})
@@ -188,6 +209,7 @@ def create_product():
 
 @app.route("/order-api/products/<product>")
 def product_profile(product):
+    load_database()
     if (product in database["products"]):
         return json.dumps(database["product-details"][product])
     else:
@@ -197,11 +219,13 @@ def product_profile(product):
 # order endpoints
 @app.route("/order-api/orders")
 def order_list():
+    load_database()
     return json.dumps(database["orders"])
 
 
 @app.route("/order-api/orders/add", methods=['POST'])
 def add_order():
+    load_database()
     req_data = request.get_json()
     username = req_data["username"]
     product = req_data["product"]
@@ -216,11 +240,13 @@ def add_order():
     database["orders"].append((username, product, order_time))
     database["profile"][username]["orders"].append((product, order_time))
     database["product-details"][product]["orders"].append((username, order_time))
+    dump_database()
     return json.dumps({"status": "success"})
 
 
 @app.route("/order-api/users/orders/<username>")
 def user_orders(username):
+    load_database()
     if (username in database["users"]):
         return json.dumps(database["profile"][username]["orders"])
     else:
@@ -229,6 +255,7 @@ def user_orders(username):
 
 @app.route("/order-api/products/orders/<product>")
 def product_orders(product):
+    load_database()
     if (product in database["products"]):
         return json.dumps(database["product-details"][product]["orders"])
     else:
@@ -237,6 +264,7 @@ def product_orders(product):
 
 @app.route("/order-api/orders/add/bulk", methods=['POST'])
 def add_bulk_order():
+    load_database()
     req_data = request.get_json()
     res = []
     for order in req_data:
@@ -256,12 +284,14 @@ def add_bulk_order():
         database["profile"][username]["orders"].append((product, order_time))
         database["product-details"][product]["orders"].append((username, order_time))
         res.append(json.dumps({"status": "success"}))
+    dump_database()
     return json.dumps(res)
 
 
 # kart endpoints
 @app.route("/order-api/kart/add", methods=['POST'])
 def add_to_kart():
+    load_database()
     req_data = request.get_json()
     username = req_data["username"]
     product = req_data["product"]
@@ -274,11 +304,13 @@ def add_to_kart():
         return json.dumps({"status": "failure", "message": "product not exists"})
     
     database["profile"][username]["kart"].append((product, order_time))
+    dump_database()
     return json.dumps({"status": "success"})
 
 
 @app.route("/order-api/kart/checkout/<username>")
-def checkout_cart(username):
+def checkout_kart(username):
+    load_database()
     if (username not in database["users"]):
         return json.dumps({"status": "failure", "message": "user not exists"})
     
@@ -290,6 +322,7 @@ def checkout_cart(username):
         database["profile"][username]["orders"].append((product, order_time))
         database["product-details"][product]["orders"].append((username, order_time))
     database["profile"][username]["kart"] = []
+    dump_database()
     return json.dumps({"status": "success"})
 
 
