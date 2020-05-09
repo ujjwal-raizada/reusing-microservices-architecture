@@ -2,8 +2,11 @@ import time
 
 import requests
 
-# URL2 = "http://ujjwalraizada.pythonanywhere.com/order-api/"
-URL = "http://localhost:5000/order-api/"
+URL = "http://ujjwalraizada.pythonanywhere.com/order-api/"
+# URL = "http://localhost:5000/order-api/"
+
+# ping home page to initialize database
+requests.get(URL)
 
 # create 2 users
 print("creating 2 users...")
