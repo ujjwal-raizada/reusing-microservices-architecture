@@ -12,8 +12,8 @@ class RegisterService extends Component {
     keywords: '',
     developer: '',
     documentation: '',
-    tech_stack: '',
-    code_snippet: '',
+    techStack: '',
+    codeSnippet: '',
     params: '',
     batchSize: '',
     url: '',
@@ -34,7 +34,7 @@ class RegisterService extends Component {
     const route = config.get('host_url') + config.get('routes.addExisting')
     var data = {...this.state}
     data.params = data.params.split(/\s*,\s*/)
-    data.tech_stack = data.tech_stack.split(/\s*,\s*/)
+    data.techStack = data.techStack.split(/\s*,\s*/)
     data.keywords = data.keywords.split(/\s*,\s*/)
     
     axios.post(route, {data: data}) 
@@ -90,12 +90,12 @@ class RegisterService extends Component {
                   onChange={this.handleChange}
                 />
               </Form.Group>
-              <Form.Group as={Col} controlId="tech_stack">
+              <Form.Group as={Col} controlId="techStack">
                 <Form.Label> Tech Stack </Form.Label>
                 <Form.Control 
                   type="text" 
                   placeholder="comma(,) separated"
-                  value={this.state.tech_stack}
+                  value={this.state.techStack}
                   onChange={this.handleChange}
                 />
               </Form.Group>
@@ -164,12 +164,12 @@ class RegisterService extends Component {
               </Form.Group>
             </Form.Row>
             <Form.Row>
-              <Form.Group as={Col} controlId="code_snippet">
+              <Form.Group as={Col} controlId="codeSnippet">
                 <Form.Label> Code Snippet </Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Code Snippet"
-                  value={this.state.code_snippet}
+                  value={this.state.codeSnippet}
                   onChange={this.handleChange}
                 />
               </Form.Group>

@@ -9,8 +9,8 @@ class ServiceList extends Component {
   render() { 
 
     var serviceList = this.props.services.map((service, index) => {
-      const { _id, title, developer, keywords, documentation, code_snippet,
-        tech_stack, params, url, getRoute, postRoute, batchSize } = service
+      const { _id, title, developer, keywords, documentation, codeSnippet,
+        techStack, params, url, getRoute, postRoute, batchSize } = service
 
       return (
         <Card key={_id}>
@@ -25,9 +25,9 @@ class ServiceList extends Component {
               <CardText title="Host URL" text={url}/>
               <CardListGroup title="Routes" list={[getRoute, postRoute]}/>
               <CardText title="Batch Size" text={batchSize}/>
-              <CardListGroup title="Techstack" list={tech_stack}/>
+              <CardListGroup title="Techstack" list={techStack}/>
               <CardText title="Documentation" text={documentation}/>
-              <CardText title="Code Snippets" text={code_snippet}/>              
+              <CardText title="Code Snippets" text={codeSnippet}/>              
               {
                 this.props.controls &&
                 <Row>
