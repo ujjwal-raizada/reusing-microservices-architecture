@@ -28,23 +28,19 @@ var MicroserviceSchema = new Schema({
     }],
     url: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     getRoute: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     postRoute: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     batchSize: {
         type: Number,
-        required: true,
-        unique: true
+        required: true
     }
 });
 
