@@ -20,6 +20,7 @@ class MappingSelection extends Component {
         var {type, subType} = this.props.associatedMapping
         if(!type || !subType) {
             this.props.handleChange(types[0], subTypes[types[0]][0])
+            return null
         }
         var typesList = types.map( (item, index) => (
             <option key={index} value={item}> {item} </option>
@@ -35,7 +36,6 @@ class MappingSelection extends Component {
                     <Form.Label> Mapping Type </Form.Label>
                     <Form.Control 
                         as='select'
-                        defaultValue={types[0]} 
                         value={type} 
                         onChange={this.handleChange}
                     >
@@ -45,8 +45,7 @@ class MappingSelection extends Component {
                 <Form.Group controlId='subType'>
                     <Form.Label> Mapping Subtype </Form.Label>
                     <Form.Control 
-                        as='select'
-                        defaultValue={subTypes[types[0]][0]}  
+                        as='select'  
                         value={subType} 
                         onChange={this.handleChange}
                     >

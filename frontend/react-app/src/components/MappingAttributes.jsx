@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { Form, Container, Row, ButtonGroup, Button } from 'react-bootstrap'
+import { Form, Container, Row } from 'react-bootstrap'
 import MonacoEditor from 'react-monaco-editor'
-import Multiselect from './Multiselect'
-
 
 class MappingAttributes extends Component {
     
@@ -45,41 +43,12 @@ class MappingAttributes extends Component {
                         />
                     </Form.Group>
                 </Row>
-                <Row style={{height: 20}}>
-                    < Multiselect
-                        args = {this.props.microserviceMapping.function.arguments}
-                        parameters = {this.props.requestedMicroservice.params}
-                        handleArguments = {this.props.handleArguments}
-                    />
-                </Row>
-                <br/>
-                <Row>
-                    <ButtonGroup>
-                        <Button 
-                            variant='outline-dark' 
-                            size='ls' 
-                            name='add' 
-                            onClick={this.handleClick}
-                        > 
-                            Add 
-                        </Button>
-                        <Button 
-                            variant='outline-secondary' 
-                            size='ls' 
-                            name='remove' 
-                            onClick={this.handleClick}
-                        > 
-                            Remove 
-                        </Button>
-                    </ButtonGroup>
-                </Row>
-                <br/>
                 <Row>
                     <Form.Group controlId='code'>
                         <Form.Label> Function implementation </Form.Label>
                         <MonacoEditor
-                            height="200"
-                            width="600"
+                            height="300"
+                            width="500"
                             language="javascript"
                             theme="vs-dark"
                             defaultValue="\\enter code here"

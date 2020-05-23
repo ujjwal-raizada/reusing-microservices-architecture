@@ -18,7 +18,8 @@ class ServiceMapping extends Component {
     microserviceMapping: null,
     allMappings: null,
     requestedMS: '',
-    existingMS: ''
+    existingMS: '',
+    requestParameters: {}
   }
 
   componentDidMount() {        
@@ -50,12 +51,12 @@ class ServiceMapping extends Component {
         templates[type.name] = {}
         let list = []
         allTemplates.forEach(subType => {
-          if(subType.transformation == type._id) {
+          if(subType.transformation === type._id) {
             list.push(subType.name)
             templates[type.name][subType.name] = subType.code
           }
         })
-        allMappings.subTypes[type.name] = list        
+        allMappings.subTypes[type.name] = list
       });
       this.setState({
         allMappings: allMappings,
@@ -67,7 +68,7 @@ class ServiceMapping extends Component {
         originalMapping: responses[3].data.mapping,
         parameter: responses[3].data.mapping.parameters[0]
       })
-    })    
+    })
     .catch(console.log)
   }
 
@@ -80,6 +81,7 @@ class ServiceMapping extends Component {
       }
       })
     )
+    this.updateArguments()
   }
 
   selectMapping = (type, subType) => {
@@ -92,27 +94,47 @@ class ServiceMapping extends Component {
           'type': type,
           'subType': subType
         },
-        microserviceMapping: microserviceMapping                
+        microserviceMapping: microserviceMapping
       }
     })
   }
 
   handleName = value => {
-    this.setState(state => {            
+    this.setState(state => {
       var microserviceMapping = {...state.microserviceMapping}
       microserviceMapping.mappings[state.parameter].function.name = value
       return {
-        microserviceMapping: microserviceMapping                
+        microserviceMapping: microserviceMapping
       }
     })
   }
 
   handleArguments = value => {
-    this.setState(state => {            
+    this.setState(state => {
       var microserviceMapping = {...state.microserviceMapping}
-      microserviceMapping.mappings[state.parameter].function.arguments = value
+      var { requestParameters } = state
+      if(requestParameters[value]) {
+        requestParameters[value] = false
+      } else {
+        requestParameters[value] = true
+      }
+      microserviceMapping.mappings[state.parameter].function.arguments
+       = Object.keys(requestParameters).filter(key => requestParameters[key])
       return {
-        microserviceMapping: microserviceMapping                
+        microserviceMapping: microserviceMapping,
+        requestParameters: requestParameters
+      }
+    })
+  }
+
+  updateArguments = () => {
+    this.setState(state => {
+      var microserviceMapping = {...state.microserviceMapping}
+      var { requestParameters } = state
+      microserviceMapping.mappings[state.parameter].function.arguments
+      = Object.keys(requestParameters).filter(key => requestParameters[key])
+      return {
+        microserviceMapping: microserviceMapping
       }
     })
   }
@@ -122,7 +144,7 @@ class ServiceMapping extends Component {
       var microserviceMapping = {...state.microserviceMapping}
       microserviceMapping.mappings[state.parameter].function.code = value
       return {
-        microserviceMapping: microserviceMapping                
+        microserviceMapping: microserviceMapping
       }
     })
   }
@@ -150,25 +172,27 @@ class ServiceMapping extends Component {
 
   // TODO: standardize the null-none correspondences in select menus
   render() {
-    var { microserviceMapping, parameter, mapping,
+    var { microserviceMapping, parameter, mapping, requestParameters, 
       allMappings, requestedMicroservice, templates } = this.state
     if(microserviceMapping && requestedMicroservice && 
       templates && allMappings) {
       return (
         <Container>
-          <Row>
-            <Col md='auto' style={{height: "80%", overflowY: 'auto'}}> 
-                {microserviceMapping && <h4> Parameters </h4>}                        
+            <Row>
+              <Col sm='auto' style={{height: "80%", overflowY: 'auto'}}> 
+                {microserviceMapping && <h4> Existing's <br/> Parameters </h4>}
                 {
                   microserviceMapping && 
                   <ParamList 
                     paramList = {microserviceMapping.parameters} 
+                    selected = {{[parameter]: true}}
+                    color = "primary"
                     onClick = {this.selectParam}
                   />
                 }
             </Col>
-            <Col md='auto' style={{height: "80%", overflowY: 'auto'}}> 
-                {parameter && <h4> Associated Mapping </h4>}                        
+            <Col sm='auto' style={{height: "80%", overflowY: 'auto'}}> 
+                {parameter && <h4> Associated Mapping </h4>}
                 {
                   parameter && 
                   <MappingSelection 
@@ -179,8 +203,8 @@ class ServiceMapping extends Component {
                   />
                 }
             </Col>
-            <Col style={{height: "80%", overflowY: 'auto'}}>                        
-                {mapping.subType && <h4> Attributes </h4>}                        
+            <Col style={{height: "80%", overflowY: 'auto'}}>
+                {mapping.subType && <h4> Attributes </h4>}
                 {
                   mapping.subType && 
                   <MappingAttributes
@@ -192,11 +216,23 @@ class ServiceMapping extends Component {
                     handleArguments = {this.handleArguments}
                     handleCode = {this.handleCode}
                   />
-                }                            
+                }
+            </Col>
+            <Col sm='auto' style={{height: "80%", overflowY: 'auto'}}> 
+                {requestedMicroservice && <h4> Requested's<br/> Arguments </h4>}
+                {
+                  requestedMicroservice && 
+                  <ParamList 
+                    paramList = {requestedMicroservice.params} 
+                    selected = {requestParameters}
+                    color = "dark"
+                    onClick = {this.handleArguments}
+                  />
+                }
             </Col>
           </Row>
           <hr/>
-          <Row>                
+          <Row>
             <Col md={{offset: 8}}>
               <ButtonGroup>
                 <Button 
@@ -215,7 +251,7 @@ class ServiceMapping extends Component {
                   > 
                   Cancel 
                 </Button>
-              </ButtonGroup>                        
+              </ButtonGroup>
             </Col>
           </Row>
         </Container>
@@ -224,9 +260,9 @@ class ServiceMapping extends Component {
       return (
         <h3 className="text-center"> 
           <Spinner animation="border" variant="primary" />
-        </h3>                 
+        </h3>
       )
-    }        
+    }
   }
 }
 
