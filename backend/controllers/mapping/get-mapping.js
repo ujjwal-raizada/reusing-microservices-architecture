@@ -12,7 +12,7 @@ getMapping = async (req, res) => {
         res.send({status:true, mapping: mapping})
       } else {
         var mapping = {}
-        Microservice.findOne({title: existing}, (err, microservice) => {
+        Microservice.findById(existing, (err, microservice) => {
           if(err) {
             console.log(err)
             res.send({status: false, error: err})
