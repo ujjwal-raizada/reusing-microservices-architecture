@@ -26,6 +26,7 @@ class Multiselect extends Component {
                     <Form.Label>Arg {index+1}:</Form.Label>
                     <Form.Control
                         as='select'
+                        size='sm'
                         value={argument || 'none'} 
                         onChange={this.handleChange}
                     > 

@@ -45,7 +45,7 @@ class MappingAttributes extends Component {
                         />
                     </Form.Group>
                 </Row>
-                <Row>
+                <Row style={{height: 20}}>
                     < Multiselect
                         args = {this.props.microserviceMapping.function.arguments}
                         parameters = {this.props.requestedMicroservice.params}
@@ -78,11 +78,11 @@ class MappingAttributes extends Component {
                     <Form.Group controlId='code'>
                         <Form.Label> Function implementation </Form.Label>
                         <MonacoEditor
-                            height="400"
+                            height="200"
                             width="600"
                             language="javascript"
                             theme="vs-dark"
-                            defaultValue="aa"
+                            defaultValue="\\enter code here"
                             value={this.props.microserviceMapping.function.code}
                             onChange={this.props.handleCode}
                             options={options}
