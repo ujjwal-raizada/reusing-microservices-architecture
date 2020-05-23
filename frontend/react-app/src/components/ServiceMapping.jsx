@@ -31,50 +31,43 @@ class ServiceMapping extends Component {
     }) 
 
     const host = config.get('host_url')
-    axios.get(host + config.get('routes.allMappings'))
-    .then(res => {
-      this.setState({
-        allMappings: res.data.allMappings
-      })
-    })
-    .catch(console.log)
 
-    axios.get(host + config.get('routes.templates'))
-    .then(res => {
-      console.log(res)
+    axios.all([
+      axios.get(host + config.get('routes.allTransformations')),
+      axios.get(host + config.get('routes.allTemplates')),
+      axios.post(host + config.get('routes.requestedById'),
+        {'micro_id' : requestedMS}),
+      axios.post(host + config.get('routes.mapping'),
+        {'existing': existingMS, 'requested': requestedMS}),
+    ])
+    .then(responses => {
+      let allTransformations = responses[0].data
+      let allTemplates = responses[1].data
+      let allMappings = {types: [], subTypes: {}}
+      let templates = {}
+      allMappings.types = allTransformations.map(type => type.name)
+      allTransformations.forEach(type => {
+        templates[type.name] = {}
+        let list = []
+        allTemplates.forEach(subType => {
+          if(subType.transformation == type._id) {
+            list.push(subType.name)
+            templates[type.name][subType.name] = subType.code
+          }
+        })
+        allMappings.subTypes[type.name] = list        
+      });
       this.setState({
-        templates: res.data.templates
+        allMappings: allMappings,
+        templates: templates,
+        allTransformations: allTransformations,
+        allTemplates: allTemplates,
+        requestedMicroservice: responses[2].data.micro,
+        microserviceMapping: responses[3].data.mapping,
+        originalMapping: responses[3].data.mapping,
+        parameter: responses[3].data.mapping.parameters[0]
       })
-    })
-    .catch(console.log)
-    
-    axios.post(host + config.get('routes.requestedById'),
-      {'micro_id' : requestedMS}
-    )
-    .then(res => {
-      if(res.data.status) {
-        this.setState({
-          requestedMicroservice: res.data.micro
-        })
-      } else {
-        console.log('Error in fetching data')
-      }
-    })
-    .catch(console.log)
-
-    axios.post(host + config.get('routes.mapping'),
-      {'existing': existingMS, 'requested': requestedMS}
-    )
-    .then(res => {
-      if(res.data.status) {
-        this.setState({
-          microserviceMapping: res.data.mapping,
-          originalMapping: res.data.mapping
-        })
-      } else {
-        console.log('Error in fetching data')
-      }        
-    })
+    })    
     .catch(console.log)
   }
 
@@ -142,7 +135,6 @@ class ServiceMapping extends Component {
         requestedMicroserviceName: this.state.requestedMicroservice.title
       }).then(res => {
         console.log('Mapping has been updated.')
-        console.log(this.state.microserviceMapping)
       })
       .catch(error => {
         console.log(error)
@@ -165,7 +157,7 @@ class ServiceMapping extends Component {
       return (
         <Container>
           <Row>
-            <Col md='auto' style={{height: 500, overflowY: 'auto'}}> 
+            <Col md='auto' style={{height: "80%", overflowY: 'auto'}}> 
                 {microserviceMapping && <h4> Parameters </h4>}                        
                 {
                   microserviceMapping && 
@@ -175,7 +167,7 @@ class ServiceMapping extends Component {
                   />
                 }
             </Col>
-            <Col md='auto' style={{height: 500, overflowY: 'auto'}}> 
+            <Col md='auto' style={{height: "80%", overflowY: 'auto'}}> 
                 {parameter && <h4> Associated Mapping </h4>}                        
                 {
                   parameter && 
@@ -187,7 +179,7 @@ class ServiceMapping extends Component {
                   />
                 }
             </Col>
-            <Col style={{height: 500, overflowY: 'auto'}}>                        
+            <Col style={{height: "80%", overflowY: 'auto'}}>                        
                 {mapping.subType && <h4> Attributes </h4>}                        
                 {
                   mapping.subType && 

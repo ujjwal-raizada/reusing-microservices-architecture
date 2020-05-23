@@ -6,8 +6,8 @@ function InitConfig(production) {
       ? ``
       : `http://localhost:8080`,
     routes: {
-      allMappings: `/mapping/all`,
-      templates: `/mapping/templates`,
+      allTransformations: `/mapping/transformations/all`,
+      allTemplates: `/mapping/templates/all`,
       mapping: `/mapping/get`,
       updateMapping: `/mapping/update`,
       microservice: `/existing/info`,
